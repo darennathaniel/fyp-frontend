@@ -14,14 +14,10 @@ import { Label } from "@/components/ui/label";
 import { useError } from "@/hooks/useError";
 import { useLoading } from "@/hooks/useLoading";
 import { useLogin } from "@/hooks/useLogin";
+import { ILoginFormData } from "@/types/user/ILoginFormData";
 import { AxiosError } from "axios";
 import { FormEvent } from "react";
 import { useNavigate } from "react-router";
-
-interface FormData {
-  username: { value: string };
-  password: { value: string };
-}
 
 export default function Login() {
   const navigate = useNavigate();
@@ -31,7 +27,8 @@ export default function Login() {
     e.preventDefault();
     showLoading();
     try {
-      const { username, password } = e.target as typeof e.target & FormData;
+      const { username, password } = e.target as typeof e.target &
+        ILoginFormData;
       const login = useLogin();
       await login(username.value, password.value);
       navigate(-1);
