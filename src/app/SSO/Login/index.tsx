@@ -1,4 +1,5 @@
 import ErrorPopup from "@/components/ErrorPopup";
+import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useError } from "@/hooks/useError";
+import { useLoading } from "@/hooks/useLoading";
 import { useLogin } from "@/hooks/useLogin";
 import { AxiosError } from "axios";
 import { FormEvent } from "react";
@@ -24,12 +26,13 @@ interface FormData {
 export default function Login() {
   const navigate = useNavigate();
   const { showError } = useError();
+  const { showLoading, closeLoading } = useLoading();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    showLoading();
     try {
       const { username, password } = e.target as typeof e.target & FormData;
       const login = useLogin();
-      console.log(username.value, password.value);
       await login(username.value, password.value);
       navigate(-1);
     } catch (err) {
@@ -39,10 +42,13 @@ export default function Login() {
           message: err.response?.data.message,
         });
       }
+    } finally {
+      closeLoading();
     }
   };
   return (
     <>
+      <Loading />
       <ErrorPopup />
       <form
         className="w-screen h-screen flex items-center justify-center"
