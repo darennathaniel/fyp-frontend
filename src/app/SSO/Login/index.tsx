@@ -23,16 +23,17 @@ export default function Login() {
   const navigate = useNavigate();
   const { showError } = useError();
   const { showLoading, closeLoading } = useLoading();
+  const login = useLogin();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     showLoading();
     try {
-      const { username, password } = e.target as typeof e.target &
+      const { username_or_email, password } = e.target as typeof e.target &
         ILoginFormData;
-      const login = useLogin();
-      await login(username.value, password.value);
-      navigate(-1);
+      await login(username_or_email.value, password.value);
+      navigate("/");
     } catch (err) {
+      console.log(err);
       if (err instanceof AxiosError) {
         showError({
           statusCode: err.status ?? 400,
@@ -55,15 +56,16 @@ export default function Login() {
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl">Login to your account</CardTitle>
             <CardDescription>
-              Enter your username and password to login into your account
+              Enter your username or email and password to login into your
+              account
             </CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="username_or_email">Username or Email</Label>
               <Input
                 className="text-zinc-950"
-                id="username"
+                id="username_or_email"
                 type="text"
                 required
                 placeholder="johndoe"

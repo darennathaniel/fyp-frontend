@@ -1,4 +1,5 @@
-import { IError, setError } from "@/reducers/app";
+import { setError } from "@/reducers/app";
+import { IError } from "@/types/user/IError";
 import { useAppDispatch } from "./useAppDispatch";
 
 export function useError() {
