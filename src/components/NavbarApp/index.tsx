@@ -1,14 +1,10 @@
 import { Outlet, useLocation } from "react-router";
 import {
   NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-  NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 import {
   DropdownMenu,
@@ -29,6 +25,7 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 import { useLogout } from "@/hooks/useLogout";
 import { DropdownMenuItemProps } from "@radix-ui/react-dropdown-menu";
 import { useUser } from "@/hooks/useUser";
+import MobileNavbarApp from "../MobileNavbarApp";
 
 function StyledDropdownMenuItem(
   props: IStyledDropdownMenuItem & DropdownMenuItemProps
@@ -56,7 +53,8 @@ export default function NavbarApp() {
   return (
     <div>
       <div className="border-b flex justify-between h-16">
-        <NavigationMenu className="flex items-center">
+        <MobileNavbarApp />
+        <NavigationMenu className="items-center hidden md:flex">
           <NavigationMenuList className="gap-1">
             <NavigationMenuItem>
               <Link to="/">
