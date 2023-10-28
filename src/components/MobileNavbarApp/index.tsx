@@ -17,6 +17,24 @@ import {
 } from "../ui/accordion";
 import { IStyledAccordion } from "@/types/accordion/IStyledAccordion";
 import { AccordionSingleProps } from "@radix-ui/react-accordion";
+import { IStyledMobileNavigationItem } from "@/types/navigation/IStyledMobileNavigationItem";
+import { NavigationMenuItemProps } from "@radix-ui/react-navigation-menu";
+
+function StyledMobileNavigationItem(
+  props: IStyledMobileNavigationItem & NavigationMenuItemProps
+) {
+  return (
+    <NavigationMenuItem className="w-full border-b" {...props}>
+      <Link to={props.to} className="w-full block">
+        <NavigationMenuLink
+          className={`px-0 text-base w-full ${navigationMenuTriggerStyle()}`}
+        >
+          {props.title}
+        </NavigationMenuLink>
+      </Link>
+    </NavigationMenuItem>
+  );
+}
 
 function StyledAccordion(props: IStyledAccordion & AccordionSingleProps) {
   return (
@@ -53,34 +71,22 @@ export default function MobileNavbarApp() {
           }`}
         >
           <NavigationMenuList className="flex flex-col">
-            <NavigationMenuItem className="w-full">
-              <Link to="/" className="w-full block">
-                <NavigationMenuLink
-                  className={`px-0 text-base w-full ${navigationMenuTriggerStyle()}`}
-                >
-                  Test
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-            <StyledAccordion type="single" className="w-full" title="Company">
-              <NavigationMenuItem className="w-full">
-                <Link to="/1" className="block w-full">
-                  <NavigationMenuLink
-                    className={`${navigationMenuTriggerStyle()} w-full`}
-                  >
-                    test
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem className="w-full">
-                <Link to="/2">
-                  <NavigationMenuLink
-                    className={`${navigationMenuTriggerStyle()} w-full`}
-                  >
-                    test
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
+            <StyledMobileNavigationItem to="/" title="Test" />
+            <StyledAccordion
+              type="single"
+              className="w-full border-b"
+              title="Company"
+            >
+              <StyledMobileNavigationItem
+                to="/1"
+                title="test"
+                className="border-b-0"
+              />
+              <StyledMobileNavigationItem
+                to="/2"
+                title="test"
+                className="border-b-0"
+              />
             </StyledAccordion>
           </NavigationMenuList>
         </div>
