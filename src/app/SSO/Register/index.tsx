@@ -18,6 +18,7 @@ import { IRegisterFormData } from "@/types/user/IRegisterFormData";
 import { AxiosError } from "axios";
 import { FormEvent } from "react";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -70,6 +71,16 @@ export default function Register() {
                 placeholder="johndoe"
               />
             </div>
+            <div>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                className="text-zinc-950"
+                id="email"
+                type="email"
+                required
+                placeholder="johndoe@mail.com"
+              />
+            </div>
             <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
               <Input
@@ -89,13 +100,19 @@ export default function Register() {
               />
             </div>
           </CardContent>
-          <CardFooter>
+          <CardFooter className="grid gap-2">
             <Button
               variant="outline"
               className="w-full hover:bg-gray-100 active:bg-gray-300 hover:text-zinc-950"
             >
               Create Account
             </Button>
+            <div className="flex items-center">
+              <p className="text-sm md:text-base">Already have an account?</p>
+              <Button className="h-8 px-2 text-gray-300 hover:text-white">
+                <Link to="/sso/login">Login here!</Link>
+              </Button>
+            </div>
           </CardFooter>
         </Card>
       </form>
