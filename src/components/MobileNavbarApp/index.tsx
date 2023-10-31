@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   NavigationMenu,
@@ -19,6 +19,7 @@ import { IStyledAccordion } from "@/types/accordion/IStyledAccordion";
 import { AccordionSingleProps } from "@radix-ui/react-accordion";
 import { IStyledMobileNavigationItem } from "@/types/navigation/IStyledMobileNavigationItem";
 import { NavigationMenuItemProps } from "@radix-ui/react-navigation-menu";
+import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
 function StyledMobileNavigationItem(
   props: IStyledMobileNavigationItem & NavigationMenuItemProps
@@ -27,7 +28,8 @@ function StyledMobileNavigationItem(
     <NavigationMenuItem className="w-full border-b" {...props}>
       <Link to={props.to} className="w-full block">
         <NavigationMenuLink
-          className={`px-0 text-base w-full ${navigationMenuTriggerStyle()}`}
+          className={`${navigationMenuTriggerStyle()}`}
+          style={{ fontSize: "1rem", padding: 0 }}
         >
           {props.title}
         </NavigationMenuLink>
@@ -40,7 +42,7 @@ function StyledAccordion(props: IStyledAccordion & AccordionSingleProps) {
   return (
     <Accordion collapsible className="w-full" {...props}>
       <AccordionItem value="item-1" className="border-b-0">
-        <AccordionTrigger className="hover:no-underline">
+        <AccordionTrigger className="hover:no-underline text-base">
           {props.title}
         </AccordionTrigger>
         <AccordionContent>{props.children}</AccordionContent>
@@ -51,8 +53,10 @@ function StyledAccordion(props: IStyledAccordion & AccordionSingleProps) {
 
 export default function MobileNavbarApp() {
   const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLElement>(null);
+  useOnClickOutside(() => setOpen(false), ref);
   return (
-    <NavigationMenu className="md:hidden">
+    <NavigationMenu className="md:hidden" ref={ref}>
       <div className="items-center px-4 mx-auto">
         <div className="flex items-center justify-between py-3">
           <div className="md:hidden">
@@ -71,7 +75,11 @@ export default function MobileNavbarApp() {
           }`}
         >
           <NavigationMenuList className="flex flex-col">
-            <StyledMobileNavigationItem to="/" title="Test" />
+            <StyledMobileNavigationItem
+              to="/"
+              title="Home"
+              onClick={() => setOpen(false)}
+            />
             <StyledAccordion
               type="single"
               className="w-full border-b"
@@ -81,11 +89,13 @@ export default function MobileNavbarApp() {
                 to="/1"
                 title="test"
                 className="border-b-0"
+                onClick={() => setOpen(false)}
               />
               <StyledMobileNavigationItem
                 to="/2"
                 title="test"
                 className="border-b-0"
+                onClick={() => setOpen(false)}
               />
             </StyledAccordion>
           </NavigationMenuList>
