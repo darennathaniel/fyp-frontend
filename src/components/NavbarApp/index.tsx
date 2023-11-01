@@ -68,24 +68,28 @@ export default function NavbarApp() {
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link to="/1">
+              <Link to="/company">
                 <NavigationMenuLink
                   className={`${navigationMenuTriggerStyle()} hover:text-gray-300 ${
-                    currentLocation === "/1" ? "text-white" : "text-gray-500"
+                    currentLocation === "/company"
+                      ? "text-white"
+                      : "text-gray-500"
                   }`}
                 >
-                  Documentation
+                  Company
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link to="/2">
+              <Link to="/supply">
                 <NavigationMenuLink
                   className={`${navigationMenuTriggerStyle()} hover:text-gray-300 ${
-                    currentLocation === "/2" ? "text-white" : "text-gray-500"
+                    currentLocation === "/supply"
+                      ? "text-white"
+                      : "text-gray-500"
                   }`}
                 >
-                  Documentation
+                  Supply
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
