@@ -11,6 +11,7 @@ import "reactflow/dist/style.css";
 import { useCompany } from "@/hooks/useCompany";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DataTable } from "@/components/DataTable";
+import { columns } from "@/components/DataTable/columns";
 
 export default function Company() {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -37,25 +38,25 @@ export default function Company() {
     <div>
       <Tabs className="w-full" defaultValue="graph">
         <div className="h-16 flex justify-center items-center">
-          <TabsList className="w-1/3 bg-gray-600">
+          <TabsList className="w-1/3 bg-zinc-700">
             <TabsTrigger
               value="graph"
-              className="rounded-lg w-1/2 h-full data-[state=active]:bg-zinc-950 data-[state=active]:text-white data-[state=active]:shadow-sm"
+              className="rounded-lg text-gray-400 hover:text-white w-1/2 h-full data-[state=active]:bg-zinc-950 data-[state=active]:text-white data-[state=active]:shadow-sm"
             >
               Graph
             </TabsTrigger>
             <TabsTrigger
               value="table"
-              className="w-1/2 rounded-lg h-full data-[state=active]:bg-zinc-950 data-[state=active]:text-white data-[state=active]:shadow-sm"
+              className="w-1/2 rounded-lg text-gray-400 hover:text-white h-full data-[state=active]:bg-zinc-950 data-[state=active]:text-white data-[state=active]:shadow-sm"
             >
               Table
             </TabsTrigger>
           </TabsList>
         </div>
         <TabsContent value="graph" className="w-full flex justify-center">
-          <div className="h-[calc(100vh-5rem)] w-3/4 p-2">
+          <div className="h-[calc(100vh-9rem)] w-3/4 p-2">
             <ReactFlow
-              className="bg-gray-400 border-white border-2 rounded-xl shadow-white shadow-md"
+              className="bg-zinc-700 border-white border-2 rounded-xl shadow-zinc-500 shadow-md"
               nodes={nodes}
               edges={edges}
               onNodesChange={onNodesChange}
@@ -66,26 +67,17 @@ export default function Company() {
           </div>
         </TabsContent>
         <TabsContent value="table" className="w-full flex justify-center">
-          <div className="w-3/4 p-2">
+          <div className="h-[calc(100vh-9rem)] w-3/4 p-2">
             <DataTable
-              columns={[
-                {
-                  id: "TASK-8782",
-                  title:
-                    "You can't compress the program without quantifying the open-source SSD pixel!",
-                  status: "in progress",
-                  label: "documentation",
-                  priority: "medium",
-                },
-              ]}
+              columns={columns}
               data={[
                 {
                   id: "TASK-8782",
                   title:
                     "You can't compress the program without quantifying the open-source SSD pixel!",
-                  status: "in progress",
-                  label: "documentation",
-                  priority: "medium",
+                  // status: "in progress",
+                  // label: "documentation",
+                  // priority: "medium",
                 },
               ]}
             />
