@@ -10,33 +10,19 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { IStyledDropdownMenuItem } from "@/types/dropdown/IStyledDropdownMenuItem";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { useLogout } from "@/hooks/useLogout";
-import { DropdownMenuItemProps } from "@radix-ui/react-dropdown-menu";
 import { useUser } from "@/hooks/useUser";
 import MobileNavbarApp from "../MobileNavbarApp";
-
-function StyledDropdownMenuItem(
-  props: IStyledDropdownMenuItem & DropdownMenuItemProps
-) {
-  return (
-    <DropdownMenuItem className="hover:bg-gray-800 cursor-pointer" {...props}>
-      {props.title}
-      <DropdownMenuShortcut>{props.shortcut}</DropdownMenuShortcut>
-    </DropdownMenuItem>
-  );
-}
+import StyledDropdownMenuItem from "../ui/StyledDropdownMenuItem";
 
 export default function NavbarApp() {
   const location = useLocation();
@@ -134,15 +120,13 @@ export default function NavbarApp() {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <StyledDropdownMenuItem title="Profile" shortcut="⇧⌘P" />
-                  <StyledDropdownMenuItem title="Settings" shortcut="⌘S" />
+                  <StyledDropdownMenuItem>Profile</StyledDropdownMenuItem>
+                  <StyledDropdownMenuItem>Settings</StyledDropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <StyledDropdownMenuItem
-                  title="Log out"
-                  shortcut="⇧⌘Q"
-                  onClick={() => logout()}
-                />
+                <StyledDropdownMenuItem onClick={() => logout()}>
+                  Log out
+                </StyledDropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (

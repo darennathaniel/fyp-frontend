@@ -24,15 +24,18 @@ import {
 } from "@/components/ui/table";
 import { DataTableToolbar } from "./DataTableToolbar";
 import { DataTablePagination } from "./DataTablePagination";
+import { useSearchParams } from "react-router-dom";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  limit: number;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  limit,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
@@ -41,10 +44,19 @@ export function DataTable<TData, TValue>({
     []
   );
   const [sorting, setSorting] = React.useState<SortingState>([]);
-
+  const [searchParams, setSearchParams] = useSearchParams();
   const table = useReactTable({
     data,
     columns,
+    initialState: {
+      pagination: {
+        pageIndex:
+          parseInt(searchParams.get("page") ?? "0") < limit
+            ? parseInt(searchParams.get("page") ?? "0")
+            : limit - 1,
+        pageSize: parseInt(searchParams.get("limit") ?? "50"),
+      },
+    },
     state: {
       sorting,
       columnVisibility,

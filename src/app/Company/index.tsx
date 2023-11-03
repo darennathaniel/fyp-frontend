@@ -80,6 +80,7 @@ export default function Company() {
                   // priority: "medium",
                 },
               ]}
+              limit={50}
             />
           </div>
         </TabsContent>
