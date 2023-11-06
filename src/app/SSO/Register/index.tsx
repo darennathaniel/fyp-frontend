@@ -15,8 +15,9 @@ import { useError } from "@/hooks/useError";
 import { useLoading } from "@/hooks/useLoading";
 import { useRegister } from "@/hooks/useRegister";
 import { IRegisterFormData } from "@/types/user/IRegisterFormData";
+import { validateConfirmPassword } from "@/utils/validateConfirmPassword";
 import { AxiosError } from "axios";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
@@ -25,6 +26,8 @@ export default function Register() {
   const { showLoading, closeLoading } = useLoading();
   const register = useRegister();
   const { showError } = useError();
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     showLoading();
@@ -82,15 +85,6 @@ export default function Register() {
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                className="text-zinc-950"
-                required
-                id="password"
-                type="password"
-              />
-            </div>
-            <div className="grid gap-2">
               <Label htmlFor="wallet_address">Wallet Address</Label>
               <Input
                 className="text-zinc-950"
@@ -99,11 +93,49 @@ export default function Register() {
                 type="text"
               />
             </div>
+            <div className="grid gap-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                className="text-zinc-950"
+                required
+                id="password"
+                type="password"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="confirm_password">Confirm Password</Label>
+              <Input
+                className={`text-zinc-950 ${
+                  validateConfirmPassword(password, confirmPassword)
+                    ? "border-white"
+                    : "border-red-500"
+                }`}
+                required
+                id="confirm_password"
+                type="password"
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                }}
+              />
+              <Label
+                className={`text-red-500 ${
+                  validateConfirmPassword(password, confirmPassword)
+                    ? "hidden"
+                    : "block"
+                }`}
+              >
+                Password is not the same!
+              </Label>
+            </div>
           </CardContent>
           <CardFooter className="grid gap-2">
             <Button
               variant="outline"
               className="w-full hover:bg-gray-100 active:bg-gray-300 hover:text-zinc-950"
+              disabled={!validateConfirmPassword(password, confirmPassword)}
             >
               Create Account
             </Button>
