@@ -1,10 +1,10 @@
 import { setError } from "@/reducers/app";
-import { IError } from "@/types/user/IError";
+import { IStatus } from "@/types/user/IStatus";
 import { useAppDispatch } from "./useAppDispatch";
 
 export function useError() {
   const dispatch = useAppDispatch();
-  const showError = (error: Partial<IError>) => {
+  const showError = (error: Partial<IStatus>) => {
     dispatch(
       setError({
         statusCode: error.statusCode ?? 400,

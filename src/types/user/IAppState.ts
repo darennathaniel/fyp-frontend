@@ -1,8 +1,8 @@
-import { IError } from "./IError";
+import { IStatus } from "./IStatus";
 import { IUser } from "./IUser";
 
 export interface IAppState {
   loading: boolean;
-  error: IError;
+  app_state: IStatus;
   user: IUser;
 }
