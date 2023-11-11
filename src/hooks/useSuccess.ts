@@ -1,12 +1,12 @@
 import { useToast } from "@/components/ui/use-toast";
-import { IStatus } from "@/types/user/IStatus";
+import { AxiosResponse } from "axios";
 
 export function useSuccess() {
   const { toast } = useToast();
-  const showSuccess = (success: Partial<IStatus>) => {
+  const showSuccess = (success: AxiosResponse) => {
     return toast({
       title: "Success!",
-      description: `${success.statusCode}: ${success.message}`,
+      description: `${success.status}: ${success.data.message}`,
     });
   };
   return { showSuccess };

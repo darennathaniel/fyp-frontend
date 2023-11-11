@@ -20,7 +20,6 @@ import { AxiosError } from "axios";
 import { FormEvent } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-import { useToast } from "@/components/ui/use-toast";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -35,10 +34,7 @@ export default function Login() {
       const { username_or_email, password } = e.target as typeof e.target &
         ILoginFormData;
       const response = await login(username_or_email.value, password.value);
-      showSuccess({
-        statusCode: response.status,
-        message: response.data.message,
-      });
+      showSuccess(response);
       navigate("/");
     } catch (err) {
       if (err instanceof AxiosError) {
