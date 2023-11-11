@@ -12,6 +12,7 @@ export function useLogin() {
     });
     const user = response.data.data[0] as IUser;
     dispatch(login({ ...user, isAuthenticated: true }));
+    return response;
   };
   return loginHelper;
 }

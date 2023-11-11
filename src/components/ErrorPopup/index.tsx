@@ -12,9 +12,9 @@ import {
 
 export default function ErrorPopup() {
   const { closeError } = useError();
-  const { error } = useAppSelector((state) => state.app);
+  const { app_state } = useAppSelector((state) => state.app);
   return (
-    <Dialog open={error.show} onOpenChange={closeError}>
+    <Dialog open={app_state.show} onOpenChange={closeError}>
       <DialogContent className="bg-zinc-950 text-white">
         <DialogHeader>
           <DialogTitle>Error</DialogTitle>
@@ -22,7 +22,7 @@ export default function ErrorPopup() {
             Something went wrong, please try again!
           </DialogDescription>
           <div className="grid gap-4 py-2">
-            {error.statusCode}: {error.message}
+            {app_state.statusCode}: {app_state.message}
           </div>
         </DialogHeader>
         <DialogFooter>

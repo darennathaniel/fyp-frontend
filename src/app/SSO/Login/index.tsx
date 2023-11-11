@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useSuccess } from "@/hooks/useSuccess";
 import { useError } from "@/hooks/useError";
 import { useLoading } from "@/hooks/useLoading";
 import { useLogin } from "@/hooks/useLogin";
@@ -19,10 +20,12 @@ import { AxiosError } from "axios";
 import { FormEvent } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function Login() {
   const navigate = useNavigate();
   const { showError } = useError();
+  const { showSuccess } = useSuccess();
   const { showLoading, closeLoading } = useLoading();
   const login = useLogin();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -31,10 +34,13 @@ export default function Login() {
     try {
       const { username_or_email, password } = e.target as typeof e.target &
         ILoginFormData;
-      await login(username_or_email.value, password.value);
+      const response = await login(username_or_email.value, password.value);
+      showSuccess({
+        statusCode: response.status,
+        message: response.data.message,
+      });
       navigate("/");
     } catch (err) {
-      console.log(err);
       if (err instanceof AxiosError) {
         showError({
           statusCode: err.status ?? 400,

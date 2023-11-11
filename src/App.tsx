@@ -6,6 +6,7 @@ import NotFoundPage from "./app/NotFoundPage";
 import NavbarApp from "./components/NavbarApp";
 import Company from "./app/Company";
 import Supply from "./app/Supply";
+import { Toaster } from "./components/ui/toaster";
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      <Toaster />
     </div>
   );
 }
