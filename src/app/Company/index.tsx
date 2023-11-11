@@ -12,6 +12,8 @@ import { useCompany } from "@/hooks/useCompany";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DataTable } from "@/components/DataTable";
 import { columns } from "@/components/DataTable/columns";
+import { Button } from "@/components/ui/button";
+import AddCompanyDialog from "./components/AddCompanyDialog";
 
 export default function Company() {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -36,8 +38,9 @@ export default function Company() {
   }, []);
   return (
     <div>
-      <Tabs className="w-full" defaultValue="graph">
-        <div className="h-16 flex justify-center items-center">
+      <Tabs className="w-full items-center flex flex-col" defaultValue="graph">
+        <div className="h-16 w-3/4 flex md:justify-between items-center">
+          <Button className="w-28 cursor-default"></Button>
           <TabsList className="w-1/3 bg-zinc-700">
             <TabsTrigger
               value="graph"
@@ -52,6 +55,15 @@ export default function Company() {
               Table
             </TabsTrigger>
           </TabsList>
+          <AddCompanyDialog>
+            <Button
+              type="button"
+              variant="outline"
+              className="hover:bg-gray-100 active:bg-gray-300 hover:text-zinc-950 w-28"
+            >
+              Add Company
+            </Button>
+          </AddCompanyDialog>
         </div>
         <TabsContent value="graph" className="w-full flex justify-center">
           <div className="h-[calc(100vh-9rem)] w-3/4 p-2">
