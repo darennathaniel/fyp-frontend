@@ -1,5 +1,3 @@
-import ErrorPopup from "@/components/ErrorPopup";
-import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -48,58 +46,53 @@ export default function Login() {
     }
   };
   return (
-    <>
-      <Loading />
-      <ErrorPopup />
-      <form
-        className="w-screen h-screen flex items-center justify-center"
-        onSubmit={handleSubmit}
-      >
-        <Card className="md:w-1/2 w-3/4">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl">Login to your account</CardTitle>
-            <CardDescription>
-              Enter your username or email and password to login into your
-              account
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="username_or_email">Username or Email</Label>
-              <Input
-                className="text-zinc-950"
-                id="username_or_email"
-                type="text"
-                required
-                placeholder="a / a@a.com"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                className="text-zinc-950"
-                required
-                id="password"
-                type="password"
-              />
-            </div>
-          </CardContent>
-          <CardFooter className="grid gap-2">
-            <Button
-              variant="outline"
-              className="w-full hover:bg-gray-100 active:bg-gray-300 hover:text-zinc-950"
-            >
-              Login
+    <form
+      className="w-screen h-screen flex items-center justify-center"
+      onSubmit={handleSubmit}
+    >
+      <Card className="md:w-1/2 w-3/4">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl">Login to your account</CardTitle>
+          <CardDescription>
+            Enter your username or email and password to login into your account
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          <div className="grid gap-2">
+            <Label htmlFor="username_or_email">Username or Email</Label>
+            <Input
+              className="text-zinc-950"
+              id="username_or_email"
+              type="text"
+              required
+              placeholder="a / a@a.com"
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              className="text-zinc-950"
+              required
+              id="password"
+              type="password"
+            />
+          </div>
+        </CardContent>
+        <CardFooter className="grid gap-2">
+          <Button
+            variant="outline"
+            className="w-full hover:bg-gray-100 active:bg-gray-300 hover:text-zinc-950"
+          >
+            Login
+          </Button>
+          <div className="flex items-center">
+            <p className="text-sm md:text-base">Haven't registered yet?</p>
+            <Button className="h-8 px-2 text-gray-300 hover:text-white">
+              <Link to="/sso/register">Register here!</Link>
             </Button>
-            <div className="flex items-center">
-              <p className="text-sm md:text-base">Haven't registered yet?</p>
-              <Button className="h-8 px-2 text-gray-300 hover:text-white">
-                <Link to="/sso/register">Register here!</Link>
-              </Button>
-            </div>
-          </CardFooter>
-        </Card>
-      </form>
-    </>
+          </div>
+        </CardFooter>
+      </Card>
+    </form>
   );
 }

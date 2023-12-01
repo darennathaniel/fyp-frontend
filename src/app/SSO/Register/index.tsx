@@ -1,5 +1,3 @@
-import ErrorPopup from "@/components/ErrorPopup";
-import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -48,106 +46,102 @@ export default function Register() {
     }
   };
   return (
-    <>
-      <Loading />
-      <ErrorPopup />
-      <form
-        className="w-screen h-screen flex items-center justify-center"
-        onSubmit={handleSubmit}
-      >
-        <Card className="md:w-1/2 w-3/4">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl">Register your account</CardTitle>
-            <CardDescription>
-              Enter your assigned username, assigned wallet address, and your
-              choice of password to create your account
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="username">Username</Label>
-              <Input
-                className="text-zinc-950"
-                id="username"
-                type="text"
-                required
-                placeholder="johndoe"
-              />
-            </div>
-            <div>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                className="text-zinc-950"
-                id="email"
-                type="email"
-                required
-                placeholder="johndoe@mail.com"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="wallet_address">Wallet Address</Label>
-              <Input
-                className="text-zinc-950"
-                required
-                id="wallet_address"
-                type="text"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                className="text-zinc-950"
-                required
-                id="password"
-                type="password"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="confirm_password">Confirm Password</Label>
-              <Input
-                className={`text-zinc-950 ${
-                  validateConfirmPassword(password, confirmPassword)
-                    ? "border-white"
-                    : "border-red-500"
-                }`}
-                required
-                id="confirm_password"
-                type="password"
-                onChange={(e) => {
-                  setConfirmPassword(e.target.value);
-                }}
-              />
-              <Label
-                className={`text-red-500 ${
-                  validateConfirmPassword(password, confirmPassword)
-                    ? "hidden"
-                    : "block"
-                }`}
-              >
-                Password is not the same!
-              </Label>
-            </div>
-          </CardContent>
-          <CardFooter className="grid gap-2">
-            <Button
-              variant="outline"
-              className="w-full hover:bg-gray-100 active:bg-gray-300 hover:text-zinc-950"
-              disabled={!validateConfirmPassword(password, confirmPassword)}
+    <form
+      className="w-screen h-screen flex items-center justify-center"
+      onSubmit={handleSubmit}
+    >
+      <Card className="md:w-1/2 w-3/4">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl">Register your account</CardTitle>
+          <CardDescription>
+            Enter your assigned username, assigned wallet address, and your
+            choice of password to create your account
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          <div className="grid gap-2">
+            <Label htmlFor="username">Username</Label>
+            <Input
+              className="text-zinc-950"
+              id="username"
+              type="text"
+              required
+              placeholder="johndoe"
+            />
+          </div>
+          <div>
+            <Label htmlFor="email">Email</Label>
+            <Input
+              className="text-zinc-950"
+              id="email"
+              type="email"
+              required
+              placeholder="johndoe@mail.com"
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="wallet_address">Wallet Address</Label>
+            <Input
+              className="text-zinc-950"
+              required
+              id="wallet_address"
+              type="text"
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              className="text-zinc-950"
+              required
+              id="password"
+              type="password"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="confirm_password">Confirm Password</Label>
+            <Input
+              className={`text-zinc-950 ${
+                validateConfirmPassword(password, confirmPassword)
+                  ? "border-white"
+                  : "border-red-500"
+              }`}
+              required
+              id="confirm_password"
+              type="password"
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+              }}
+            />
+            <Label
+              className={`text-red-500 ${
+                validateConfirmPassword(password, confirmPassword)
+                  ? "hidden"
+                  : "block"
+              }`}
             >
-              Create Account
+              Password is not the same!
+            </Label>
+          </div>
+        </CardContent>
+        <CardFooter className="grid gap-2">
+          <Button
+            variant="outline"
+            className="w-full hover:bg-gray-100 active:bg-gray-300 hover:text-zinc-950"
+            disabled={!validateConfirmPassword(password, confirmPassword)}
+          >
+            Create Account
+          </Button>
+          <div className="flex items-center">
+            <p className="text-sm md:text-base">Already have an account?</p>
+            <Button className="h-8 px-2 text-gray-300 hover:text-white">
+              <Link to="/sso/login">Login here!</Link>
             </Button>
-            <div className="flex items-center">
-              <p className="text-sm md:text-base">Already have an account?</p>
-              <Button className="h-8 px-2 text-gray-300 hover:text-white">
-                <Link to="/sso/login">Login here!</Link>
-              </Button>
-            </div>
-          </CardFooter>
-        </Card>
-      </form>
-    </>
+          </div>
+        </CardFooter>
+      </Card>
+    </form>
   );
 }

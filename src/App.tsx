@@ -7,10 +7,14 @@ import NavbarApp from "./components/NavbarApp";
 import Company from "./app/Company";
 import Supply from "./app/Supply";
 import { Toaster } from "./components/ui/toaster";
+import ErrorPopup from "./components/ErrorPopup";
+import Loading from "./components/Loading";
 
 export default function App() {
   return (
     <div className="bg-zinc-950 text-white">
+      <ErrorPopup />
+      <Loading />
       <BrowserRouter>
         <Routes>
           <Route path="/sso/*" element={<SSO />} />
