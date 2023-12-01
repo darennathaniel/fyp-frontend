@@ -6,28 +6,38 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
+  DialogClose,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import StyledButton from "@/components/ui/StyledButton";
+import { useCompany } from "@/hooks/useCompany";
 import { useError } from "@/hooks/useError";
 import { useLoading } from "@/hooks/useLoading";
 import { IAddCompanyFormData } from "@/types/company/IAddCompanyFormData";
 import { IAddCompanyDialog } from "@/types/dialog/IAddCompanyDialog";
 import { AxiosError } from "axios";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 
 export default function AddCompanyDialog({ children }: IAddCompanyDialog) {
+  const { showError } = useError();
+  const { showLoading, closeLoading } = useLoading();
+  const { addCompany } = useCompany();
+  const [open, setOpen] = useState<boolean>(false);
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { showError } = useError();
-    const { showLoading, closeLoading } = useLoading();
     showLoading();
     try {
       const { company_name, username, email, wallet_address } =
         e.target as typeof e.target & IAddCompanyFormData;
-      console.log(company_name.value);
+      await addCompany(
+        company_name.value,
+        username.value,
+        email.value,
+        wallet_address.value
+      );
+      setOpen(false);
     } catch (err) {
       if (err instanceof AxiosError) {
         showError({
@@ -40,7 +50,7 @@ export default function AddCompanyDialog({ children }: IAddCompanyDialog) {
     }
   };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-zinc-950 text-white">
         <DialogHeader>
@@ -91,7 +101,7 @@ export default function AddCompanyDialog({ children }: IAddCompanyDialog) {
           </div>
           <Separator className="bg-white my-4" />
           <DialogFooter>
-            <StyledButton text="Save Changes" type="submit" />
+            <StyledButton text="Add" type="submit" />
           </DialogFooter>
         </form>
       </DialogContent>
