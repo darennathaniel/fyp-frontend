@@ -22,7 +22,7 @@ export default function Company() {
     (params: any) => setEdges((eds: any) => addEdge(params, eds)),
     []
   );
-  const getCompany = useCompany();
+  const { getAllCompany } = useCompany();
   useEffect(() => {
     // const getData = async () => {
     //   const result = await axios.get("http://localhost:4000/company", {
@@ -34,7 +34,12 @@ export default function Company() {
     //   setEdges(edges);
     // };
     // getData();
-    getCompany();
+    getAllCompany().then((result) => {
+      const companies = result.companies;
+      const edges = result.edges;
+      setNodes(companies);
+      setEdges(edges);
+    });
   }, []);
   return (
     <div>
