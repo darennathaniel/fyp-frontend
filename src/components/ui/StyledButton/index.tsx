@@ -8,6 +8,7 @@ export default function StyledButton(props: IStyledButton & ButtonProps) {
       className="hover:bg-gray-100 active:bg-gray-300 hover:text-zinc-950"
       {...props}
     >
+      {props.children}
       {props.text}
     </Button>
   );

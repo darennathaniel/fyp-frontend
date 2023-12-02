@@ -30,9 +30,14 @@ export default function Register() {
     e.preventDefault();
     showLoading();
     try {
-      const { username, password, wallet_address } =
+      const { username, email, password, wallet_address } =
         e.target as typeof e.target & IRegisterFormData;
-      await register(username.value, password.value, wallet_address.value);
+      await register(
+        username.value,
+        email.value,
+        password.value,
+        wallet_address.value
+      );
       navigate("/");
     } catch (err) {
       if (err instanceof AxiosError) {

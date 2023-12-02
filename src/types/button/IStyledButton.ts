@@ -1,3 +1,3 @@
 export interface IStyledButton {
-  text: string;
+  text?: string;
 }
