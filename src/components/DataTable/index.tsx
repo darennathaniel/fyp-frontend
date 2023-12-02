@@ -54,7 +54,7 @@ export function DataTable<TData, TValue>({
           parseInt(searchParams.get("page") ?? "0") < limit
             ? parseInt(searchParams.get("page") ?? "0")
             : limit - 1,
-        pageSize: parseInt(searchParams.get("limit") ?? "50"),
+        pageSize: parseInt(searchParams.get("limit") ?? limit.toString()),
       },
     },
     state: {

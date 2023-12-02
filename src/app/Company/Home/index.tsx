@@ -11,7 +11,7 @@ import "reactflow/dist/style.css";
 import { useCompany } from "@/hooks/useCompany";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DataTable } from "@/components/DataTable";
-import { columns } from "@/components/DataTable/columns";
+import { columns } from "@/app/Company/Home/columns";
 import { Button } from "@/components/ui/button";
 import AddCompanyDialog from "../components/AddCompanyDialog";
 import { ICompany } from "@/types/company/ICompany";
@@ -78,7 +78,7 @@ export default function CompanyHome() {
         </TabsContent>
         <TabsContent value="table" className="w-full flex justify-center">
           <div className="h-[calc(100vh-9rem)] w-3/4 p-2">
-            <DataTable columns={columns} data={data ?? []} limit={50} />
+            <DataTable columns={columns} data={data ?? []} limit={10} />
           </div>
         </TabsContent>
       </Tabs>

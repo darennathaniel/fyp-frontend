@@ -1,8 +1,8 @@
 import { ICompany } from "@/types/company/ICompany";
 import { ColumnDef } from "@tanstack/react-table";
 import { Link } from "react-router-dom";
-import StyledButton from "../ui/StyledButton";
-import { DataTableColumnHeader } from "./DataTableColumnHeader";
+import StyledButton from "../../../components/ui/StyledButton";
+import { DataTableColumnHeader } from "../../../components/DataTable/DataTableColumnHeader";
 
 export const columns: ColumnDef<ICompany>[] = [
   {
