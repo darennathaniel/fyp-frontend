@@ -120,8 +120,12 @@ export default function NavbarApp() {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <StyledDropdownMenuItem>Profile</StyledDropdownMenuItem>
-                  <StyledDropdownMenuItem>Settings</StyledDropdownMenuItem>
+                  <Link to="/profile">
+                    <StyledDropdownMenuItem>Profile</StyledDropdownMenuItem>
+                  </Link>
+                  <Link to="/profile/settings">
+                    <StyledDropdownMenuItem>Settings</StyledDropdownMenuItem>
+                  </Link>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <StyledDropdownMenuItem onClick={() => logout()}>
