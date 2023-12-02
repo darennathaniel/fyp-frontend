@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./globals.css";
-import { Home } from "./app/Home";
+import Home from "./app/Home";
 import SSO from "./app/SSO";
 import NotFoundPage from "./app/NotFoundPage";
 import NavbarApp from "./components/NavbarApp";
@@ -9,6 +9,7 @@ import Supply from "./app/Supply";
 import { Toaster } from "./components/ui/toaster";
 import ErrorPopup from "./components/ErrorPopup";
 import Loading from "./components/Loading";
+import Profile from "./app/Profile";
 
 export default function App() {
   return (
@@ -20,8 +21,9 @@ export default function App() {
           <Route path="/sso/*" element={<SSO />} />
           <Route element={<NavbarApp />}>
             <Route path="/" element={<Home />} />
-            <Route path="/company" element={<Company />} />
+            <Route path="/company/*" element={<Company />} />
             <Route path="/supply" element={<Supply />} />
+            <Route path="/profile/*" element={<Profile />} />
             <Route path="/404" element={<NotFoundPage />} />
             <Route path="*" element={<Navigate to="/404" />} />
           </Route>
