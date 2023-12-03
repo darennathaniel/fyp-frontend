@@ -37,9 +37,9 @@ export default function CompanyHome() {
   return (
     <div>
       <Tabs className="w-full items-center flex flex-col" defaultValue="graph">
-        <div className="h-16 w-3/4 flex md:justify-between items-center">
-          <Button className="w-28 cursor-default"></Button>
-          <TabsList className="w-1/3 bg-zinc-700">
+        <div className="h-16 w-3/4 flex justify-between items-center">
+          <Button className="w-28 cursor-default hidden md:block"></Button>
+          <TabsList className="md:w-1/3 w-3/5 bg-zinc-700">
             <TabsTrigger
               value="graph"
               className="rounded-lg text-gray-400 hover:text-white w-1/2 h-full data-[state=active]:bg-zinc-950 data-[state=active]:text-white data-[state=active]:shadow-sm"
