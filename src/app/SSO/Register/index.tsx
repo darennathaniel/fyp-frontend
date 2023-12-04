@@ -41,10 +41,7 @@ export default function Register() {
       navigate("/");
     } catch (err) {
       if (err instanceof AxiosError) {
-        showError({
-          statusCode: err.status ?? 400,
-          message: err.response?.data.message,
-        });
+        showError(err);
       }
     } finally {
       closeLoading();

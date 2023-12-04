@@ -1,15 +1,16 @@
 import { setError } from "@/reducers/app";
-import { IStatus } from "@/types/user/IStatus";
+import { AxiosError } from "axios";
 import { useAppDispatch } from "./useAppDispatch";
+import { IStatus } from "@/types/user/IStatus";
 
 export function useError() {
   const dispatch = useAppDispatch();
-  const showError = (error: Partial<IStatus>) => {
+  const showError = (error: AxiosError<IStatus>) => {
     dispatch(
       setError({
-        statusCode: error.statusCode ?? 400,
-        message: error.message ?? "undefined error",
-        show: error.show ?? true,
+        statusCode: error.status ?? 400,
+        message: error.response?.data.message ?? "undefined error",
+        show: true,
       })
     );
   };
