@@ -10,17 +10,21 @@ export interface ISidebarNavItems {
 }
 
 interface ISidebarApp {
+  title: string;
+  subtitle: string;
   sidebarNavItems: ISidebarNavItems[];
 }
 
-export default function SidebarApp({ sidebarNavItems }: ISidebarApp) {
+export default function SidebarApp({
+  sidebarNavItems,
+  title,
+  subtitle,
+}: ISidebarApp) {
   return (
     <div className="space-y-6 p-10 pb-16 md:block">
       <div className="space-y-0.5">
-        <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
-        <p className="text-muted-foreground">
-          Manage your account settings and set e-mail preferences.
-        </p>
+        <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
+        <p className="text-muted-foreground">{subtitle}</p>
       </div>
       <Separator className="my-6 bg-white" />
       <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
