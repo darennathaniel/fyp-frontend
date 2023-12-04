@@ -23,6 +23,7 @@ import { useLogout } from "@/hooks/useLogout";
 import { useUser } from "@/hooks/useUser";
 import MobileNavbarApp from "../MobileNavbarApp";
 import StyledDropdownMenuItem from "../ui/StyledDropdownMenuItem";
+import { profileRoutes } from "@/constants/profiles.routes.constant";
 
 export default function NavbarApp() {
   const location = useLocation();
@@ -120,12 +121,18 @@ export default function NavbarApp() {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <Link to="/profile">
-                    <StyledDropdownMenuItem>Profile</StyledDropdownMenuItem>
-                  </Link>
-                  <Link to="/profile/settings">
-                    <StyledDropdownMenuItem>Settings</StyledDropdownMenuItem>
-                  </Link>
+                  {profileRoutes.map((route) => (
+                    <Link
+                      key={route.href}
+                      to={`${route.prefix}${
+                        route.href.length === 0 ? "" : `/${route.href}`
+                      }`}
+                    >
+                      <StyledDropdownMenuItem>
+                        {route.title}
+                      </StyledDropdownMenuItem>
+                    </Link>
+                  ))}
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <StyledDropdownMenuItem onClick={() => logout()}>

@@ -1,7 +1,8 @@
 import ProfileHome from "@/app/Profile/Home";
 import ProfileContract from "@/app/Profile/Contract";
 import { ISidebarNavItems } from "@/components/SidebarApp";
-import ProfileRequest from "@/app/Profile/Request";
+import ProfileRequestSupply from "@/app/Profile/Request/Supply";
+import ProfileRequestDelete from "@/app/Profile/Request/Delete";
 
 export const profileRoutes: ISidebarNavItems[] = [
   {
@@ -17,9 +18,15 @@ export const profileRoutes: ISidebarNavItems[] = [
     prefix: "/profile",
   },
   {
-    title: "Request",
-    href: "request",
-    component: <ProfileRequest />,
+    title: "Supply Request",
+    href: "request/supply",
+    component: <ProfileRequestSupply />,
+    prefix: "/profile",
+  },
+  {
+    title: "Delete Request",
+    href: "request/delete",
+    component: <ProfileRequestDelete />,
     prefix: "/profile",
   },
 ];

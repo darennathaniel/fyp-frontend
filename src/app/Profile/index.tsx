@@ -15,10 +15,7 @@ export default function Profile() {
         }
       >
         {profileRoutes.map((route) => (
-          <Route
-            path={route.href.split("/")[route.href.split("/").length - 1]}
-            element={route.component}
-          />
+          <Route path={route.href} element={route.component} />
         ))}
       </Route>
     </Routes>
