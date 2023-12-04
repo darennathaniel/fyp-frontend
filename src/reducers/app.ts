@@ -12,7 +12,7 @@ const initialState: IAppState = {
   },
   user: {
     username: "",
-    display_name: "",
+    company_name: "",
     wallet_address: "",
     email: "",
     isAuthenticated: false,
@@ -35,7 +35,7 @@ const appSlice = createSlice({
     logout(state) {
       state.user = {
         username: "",
-        display_name: "",
+        company_name: "",
         wallet_address: "",
         email: "",
         isAuthenticated: false,

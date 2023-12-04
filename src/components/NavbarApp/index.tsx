@@ -27,7 +27,7 @@ import StyledDropdownMenuItem from "../ui/StyledDropdownMenuItem";
 export default function NavbarApp() {
   const location = useLocation();
   const logout = useLogout();
-  const getUser = useUser();
+  const { getUser } = useUser();
   const [currentLocation, setCurrentLocation] = useState(location.pathname);
   const user = useAppSelector((state) => state.app.user);
   useEffect(() => {
@@ -92,7 +92,7 @@ export default function NavbarApp() {
                   <Avatar className="h-8 w-8">
                     <AvatarImage src="/avatars/01.png" alt="@shadcn" />
                     <AvatarFallback>
-                      {user.display_name
+                      {user.company_name
                         .split(" ")
                         .map((word) => word.toUpperCase()[0])
                         .join("")}
@@ -108,7 +108,7 @@ export default function NavbarApp() {
                 <DropdownMenuLabel className="font-normal">
                   <div className="flex flex-col space-y-1">
                     <p className="text-sm font-medium leading-none">
-                      {user.display_name}
+                      {user.company_name}
                     </p>
                     <p className="text-xs leading-none text-gray-300">
                       {user.email}
