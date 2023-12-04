@@ -1,39 +1,31 @@
 import ProfileHeader from "../components/ProfileHeader";
 import { Separator } from "@/components/ui/separator";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useUser } from "@/hooks/useUser";
-import { IUserInfo } from "@/types/user/IUserInfo";
 import { useError } from "@/hooks/useError";
 import { useLoading } from "@/hooks/useLoading";
 import { AxiosError } from "axios";
+import { useNavigate } from "react-router";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 export default function ProfileHome() {
-  const { getUserInfo } = useUser();
+  const navigate = useNavigate();
+  const { getUser } = useUser();
   const { showError } = useError();
   const { showLoading, closeLoading } = useLoading();
-  const [user, setUser] = useState<IUserInfo>({
-    username: "",
-    company_name: "",
-    email: "",
-    wallet_address: "",
-    upstream: 0,
-    downstream: 0,
-    supply: 0,
-    prerequisite: 0,
-    isAuthenticated: false,
-  });
+  const user = useAppSelector((state) => state.app.user);
   useEffect(() => {
-    showLoading();
-    getUserInfo()
-      .then((user) => {
-        setUser(user);
-      })
-      .catch((err) => {
-        if (err instanceof AxiosError) {
-          showError(err);
-        }
-      })
-      .finally(() => closeLoading());
+    if (!user.isAuthenticated) {
+      showLoading();
+      getUser()
+        .catch((err) => {
+          if (err instanceof AxiosError) {
+            showError(err);
+            navigate("/");
+          }
+        })
+        .finally(() => closeLoading());
+    }
   }, []);
   return (
     <div className="space-y-6">

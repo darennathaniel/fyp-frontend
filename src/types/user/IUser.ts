@@ -4,4 +4,8 @@ export interface IUser {
   email: string;
   wallet_address: string;
   isAuthenticated: boolean;
+  upstream: number;
+  downstream: number;
+  supply: number;
+  prerequisite: number;
 }

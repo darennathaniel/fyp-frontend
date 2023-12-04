@@ -16,6 +16,10 @@ const initialState: IAppState = {
     wallet_address: "",
     email: "",
     isAuthenticated: false,
+    upstream: 0,
+    downstream: 0,
+    supply: 0,
+    prerequisite: 0,
   },
 };
 
@@ -39,6 +43,10 @@ const appSlice = createSlice({
         wallet_address: "",
         email: "",
         isAuthenticated: false,
+        upstream: 0,
+        downstream: 0,
+        supply: 0,
+        prerequisite: 0,
       };
     },
   },
