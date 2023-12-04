@@ -13,7 +13,7 @@ import Profile from "./app/Profile";
 
 export default function App() {
   return (
-    <div className="bg-zinc-950 text-white">
+    <div className="bg-zinc-950 text-white min-h-screen">
       <ErrorPopup />
       <Loading />
       <BrowserRouter>
