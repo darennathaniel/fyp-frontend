@@ -77,7 +77,7 @@ export default function CompanyHome() {
           </div>
         </TabsContent>
         <TabsContent value="table" className="w-full flex justify-center">
-          <div className="h-[calc(100vh-9rem)] w-3/4 p-2">
+          <div className="w-3/4 p-2">
             <DataTable columns={columns} data={data ?? []} limit={10} />
           </div>
         </TabsContent>
