@@ -8,4 +8,5 @@ export interface IUser {
   downstream: number;
   supply: number;
   prerequisite: number;
+  isOwner: boolean;
 }
