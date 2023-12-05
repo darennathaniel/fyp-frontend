@@ -15,6 +15,7 @@ import { columns } from "@/app/Company/Home/columns";
 import { Button } from "@/components/ui/button";
 import AddCompanyDialog from "../components/AddCompanyDialog";
 import { ICompany } from "@/types/company/ICompany";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 export default function CompanyHome() {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -24,6 +25,7 @@ export default function CompanyHome() {
     (params: any) => setEdges((eds: any) => addEdge(params, eds)),
     []
   );
+  const user = useAppSelector((state) => state.app.user);
   const { getAllCompany } = useCompany();
   useEffect(() => {
     getAllCompany().then((result) => {
@@ -53,15 +55,19 @@ export default function CompanyHome() {
               Table
             </TabsTrigger>
           </TabsList>
-          <AddCompanyDialog>
-            <Button
-              type="button"
-              variant="outline"
-              className="hover:bg-gray-100 active:bg-gray-300 hover:text-zinc-950 w-28"
-            >
-              Add Company
-            </Button>
-          </AddCompanyDialog>
+          {user.isOwner ? (
+            <AddCompanyDialog>
+              <Button
+                type="button"
+                variant="outline"
+                className="hover:bg-gray-100 active:bg-gray-300 hover:text-zinc-950 w-28"
+              >
+                Add Company
+              </Button>
+            </AddCompanyDialog>
+          ) : (
+            <Button className="w-28 cursor-default hidden md:block"></Button>
+          )}
         </div>
         <TabsContent value="graph" className="w-full flex justify-center">
           <div className="h-[calc(100vh-9rem)] w-3/4 p-2">

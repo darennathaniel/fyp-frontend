@@ -33,6 +33,13 @@ export const columns: ColumnDef<ICompany>[] = [
   },
   {
     id: "action",
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="flex justify-center"
+        column={column}
+        title="Action"
+      />
+    ),
     cell: ({ row }) => (
       <Link to={`${row.getValue("owner")}`} className="flex justify-end">
         <StyledButton text="More Info" />

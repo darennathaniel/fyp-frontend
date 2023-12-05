@@ -37,6 +37,7 @@ export default function AddCompanyDialog({ children }: IAddCompanyDialog) {
         wallet_address.value
       );
       setOpen(false);
+      location.reload();
     } catch (err) {
       if (err instanceof AxiosError) {
         showError(err);
