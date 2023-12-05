@@ -10,8 +10,10 @@ export function useLogin() {
       username_or_email,
       password,
     });
-    const user = response.data.data[0] as IUser;
-    dispatch(login({ ...user, isAuthenticated: true }));
+    const user = response.data.data[0];
+    dispatch(
+      login({ ...user, isAuthenticated: true, isOwner: user.is_owner } as IUser)
+    );
     return response;
   };
   return loginHelper;

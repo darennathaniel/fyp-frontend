@@ -20,6 +20,7 @@ const initialState: IAppState = {
     downstream: 0,
     supply: 0,
     prerequisite: 0,
+    isOwner: false,
   },
 };
 
@@ -47,6 +48,7 @@ const appSlice = createSlice({
         downstream: 0,
         supply: 0,
         prerequisite: 0,
+        isOwner: false,
       };
     },
   },

@@ -7,8 +7,10 @@ export function useUser() {
   const dispatch = useAppDispatch();
   const getUser = async () => {
     const response = await axiosPrivate.get("user/");
-    const user = response.data.data[0] as IUser;
-    dispatch(login({ ...user, isAuthenticated: true }));
+    const user = response.data.data[0];
+    dispatch(
+      login({ ...user, isAuthenticated: true, isOwner: user.is_owner } as IUser)
+    );
   };
   return { getUser };
 }
