@@ -5,7 +5,6 @@ export function useCompany() {
   const getAllCompany = async () => {
     const response = await axiosPrivate.get("company/");
     const companies = response.data.data[0];
-    console.log(companies);
     return companies;
   };
   const addCompany = async (
