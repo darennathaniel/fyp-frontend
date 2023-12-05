@@ -31,7 +31,7 @@ export default function SidebarApp({
         <aside className="-mx-4 lg:w-1/5">
           <SidebarNav items={sidebarNavItems} />
         </aside>
-        <div className="flex-1 lg:max-w-2xl">
+        <div className="w-full">
           <Outlet />
         </div>
       </div>
