@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router";
+import { Outlet, useLocation, useNavigate } from "react-router";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -27,6 +27,7 @@ import { profileRoutes } from "@/constants/profiles.routes.constant";
 
 export default function NavbarApp() {
   const location = useLocation();
+  const navigate = useNavigate();
   const logout = useLogout();
   const { getUser } = useUser();
   const [currentLocation, setCurrentLocation] = useState(location.pathname);
@@ -135,7 +136,12 @@ export default function NavbarApp() {
                   ))}
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <StyledDropdownMenuItem onClick={() => logout()}>
+                <StyledDropdownMenuItem
+                  onClick={() => {
+                    logout();
+                    navigate("/");
+                  }}
+                >
                   Log out
                 </StyledDropdownMenuItem>
               </DropdownMenuContent>

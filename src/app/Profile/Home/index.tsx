@@ -47,7 +47,9 @@ export default function ProfileHome() {
       </div>
       <div className="flex">
         <div className="font-semibold w-1/2">Wallet Address</div>
-        <div className="text-zinc-400 w-1/2">{user.wallet_address}</div>
+        <div className="text-zinc-400 w-1/2 text-ellipsis overflow-hidden">
+          {user.wallet_address}
+        </div>
       </div>
       <Separator className="bg-white" />
       <div className="flex">
