@@ -16,6 +16,11 @@ import { Button } from "@/components/ui/button";
 import AddCompanyDialog from "../components/AddCompanyDialog";
 import { ICompany } from "@/types/company/ICompany";
 import { useAppSelector } from "@/hooks/useAppSelector";
+import CustomNode from "./node";
+
+const nodeTypes = {
+  customNode: CustomNode,
+};
 
 export default function CompanyHome() {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
@@ -78,6 +83,7 @@ export default function CompanyHome() {
               onNodesChange={onNodesChange}
               onEdgesChange={onEdgesChange}
               onConnect={onConnect}
+              nodeTypes={nodeTypes}
               fitView
             ></ReactFlow>
           </div>
