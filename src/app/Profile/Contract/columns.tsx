@@ -1,5 +1,4 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { Link } from "react-router-dom";
 import StyledButton from "../../../components/ui/StyledButton";
 import { DataTableColumnHeader } from "../../../components/DataTable/DataTableColumnHeader";
 import {
@@ -23,9 +22,7 @@ export const incomingColumns: ColumnDef<IContractTable>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Contract ID" />
     ),
-    cell: ({ row }) => (
-      <div className="w-[80px] text-lg">{row.getValue("id")}</div>
-    ),
+    cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
     enableHiding: true,
   },
   {
@@ -103,13 +100,15 @@ export const incomingColumns: ColumnDef<IContractTable>[] = [
                 user.wallet_address,
                 (row.getValue("product") as IProduct).productId
               )
-                .then((res) => showSuccess(res))
+                .then((res) => {
+                  const newData = data.filter(
+                    (request) => request.id !== row.getValue("id")
+                  );
+                  setData(newData);
+                  showSuccess(res);
+                })
                 .catch((err) => showError(err))
                 .finally(() => closeLoading());
-              const newData = data.filter(
-                (contract) => contract.id !== row.getValue("id")
-              );
-              setData(newData);
             }}
             onCancelClick={() => {}}
           >
@@ -124,13 +123,15 @@ export const incomingColumns: ColumnDef<IContractTable>[] = [
                 user.wallet_address,
                 (row.getValue("product") as IProduct).productId
               )
-                .then((res) => showSuccess(res))
+                .then((res) => {
+                  const newData = data.filter(
+                    (request) => request.id !== row.getValue("id")
+                  );
+                  setData(newData);
+                  showSuccess(res);
+                })
                 .catch((err) => showError(err))
                 .finally(() => closeLoading());
-              const newData = data.filter(
-                (contract) => contract.id !== row.getValue("id")
-              );
-              setData(newData);
             }}
             onCancelClick={() => {}}
             triggerClassName="bg-red-800"
@@ -149,9 +150,7 @@ export const outgoingColumns: ColumnDef<IContractTable>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Contract ID" />
     ),
-    cell: ({ row }) => (
-      <div className="w-[80px] text-lg">{row.getValue("id")}</div>
-    ),
+    cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
     enableHiding: true,
   },
   {
@@ -214,9 +213,7 @@ export const historyColumns: ColumnDef<IContractHistory>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Contract ID" />
     ),
-    cell: ({ row }) => (
-      <div className="w-[80px] text-lg">{row.getValue("id")}</div>
-    ),
+    cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
     enableHiding: true,
   },
   {
