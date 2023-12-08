@@ -1,10 +1,18 @@
 import { ICompany } from "@/types/company/ICompany";
 import axios, { axiosPrivate } from "@/utils/axios";
+import { MarkerType } from "reactflow";
 
 export function useCompany() {
   const getAllCompany = async () => {
     const response = await axiosPrivate.get("company/");
     const companies = response.data.data[0];
+    const edges = response.data.data[0].edges.map((edge: any) => {
+      return {
+        ...edge,
+        markerEnd: { type: MarkerType.ArrowClosed },
+      };
+    });
+    companies["edges"] = edges;
     return companies;
   };
   const getCompany = async (company_address: string) => {
@@ -14,6 +22,13 @@ export function useCompany() {
       },
     });
     const companies = response.data.data;
+    const edges = response.data.data[1].edges.map((edge: any) => {
+      return {
+        ...edge,
+        markerEnd: { type: MarkerType.ArrowClosed },
+      };
+    });
+    companies[1]["edges"] = edges;
     return companies;
   };
   const addCompany = async (

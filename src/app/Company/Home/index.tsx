@@ -1,12 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import ReactFlow, {
-  addEdge,
-  MiniMap,
-  Controls,
-  Background,
-  useNodesState,
-  useEdgesState,
-} from "reactflow";
+import ReactFlow, { addEdge, useNodesState, useEdgesState } from "reactflow";
 import "reactflow/dist/style.css";
 import { useCompany } from "@/hooks/useCompany";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
