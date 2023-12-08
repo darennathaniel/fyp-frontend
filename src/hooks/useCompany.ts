@@ -1,10 +1,19 @@
 import { ICompany } from "@/types/company/ICompany";
-import { axiosPrivate } from "@/utils/axios";
+import axios, { axiosPrivate } from "@/utils/axios";
 
 export function useCompany() {
   const getAllCompany = async () => {
     const response = await axiosPrivate.get("company/");
     const companies = response.data.data[0];
+    return companies;
+  };
+  const getCompany = async (company_address: string) => {
+    const response = await axiosPrivate.get("company/", {
+      params: {
+        company_address,
+      },
+    });
+    const companies = response.data.data;
     return companies;
   };
   const addCompany = async (
@@ -25,5 +34,5 @@ export function useCompany() {
       throw err;
     }
   };
-  return { getAllCompany, addCompany };
+  return { getAllCompany, getCompany, addCompany };
 }
