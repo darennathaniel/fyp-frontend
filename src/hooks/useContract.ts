@@ -85,11 +85,19 @@ export function useContract() {
     });
     return response;
   };
+  const sendContract = async (to: string, productId: number) => {
+    const response = await axiosPrivate.post("contract/", {
+      to,
+      product_id: productId,
+    });
+    return response;
+  };
   return {
     getIncomingContract,
     getOutgoingContract,
     getHistoryContract,
     approveContract,
     declineContract,
+    sendContract,
   };
 }

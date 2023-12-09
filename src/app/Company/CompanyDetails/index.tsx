@@ -1,4 +1,6 @@
 import { DataTable } from "@/components/DataTable";
+import StyledButton from "@/components/ui/StyledButton";
+import { useAppSelector } from "@/hooks/useAppSelector";
 import { useCompany } from "@/hooks/useCompany";
 import { useError } from "@/hooks/useError";
 import { useLoading } from "@/hooks/useLoading";
@@ -16,6 +18,7 @@ import { AxiosError } from "axios";
 import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router";
 import CompanyDetailsHeader from "../components/CompanyDetailsHeader";
+import SendContractDialog from "../components/SendContractDialog";
 import { prerequisiteColumns, productColumns } from "./columns";
 
 export default function CompanyDetails() {
@@ -35,6 +38,7 @@ export default function CompanyDetails() {
   const { showLoading, closeLoading } = useLoading();
   const { getCompany } = useCompany();
   const { getProductByCompany, getPrerequisiteByCompany } = useProduct();
+  const user = useAppSelector((state) => state.app.user);
   useEffect(() => {
     showLoading();
     getCompany(owner as string)
@@ -76,11 +80,33 @@ export default function CompanyDetails() {
   }, []);
   return (
     <div className="px-4 py-2 space-y-6 flex flex-col">
-      <div>
-        <div className="font-semibold text-2xl">{company?.name}</div>
-        <div className="font-medium text-sm text-zinc-400">
-          {company?.owner}
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="font-semibold text-2xl">{company?.name}</div>
+          <div className="font-medium max-md:w-40 overflow-x-hidden text-ellipsis text-sm text-zinc-400">
+            {company?.owner}
+          </div>
         </div>
+        {user.isAuthenticated && user.wallet_address !== company?.owner ? (
+          <SendContractDialog
+            to={{
+              company_name: company?.name ?? "",
+              wallet_address: company?.owner ?? "",
+            }}
+            products={product.filter(
+              (prod) =>
+                !company?.upstream.some(
+                  (upstream) =>
+                    upstream.companyId === user.wallet_address &&
+                    upstream.productId === prod.productId
+                )
+            )}
+          >
+            <StyledButton text="Send Contract" />
+          </SendContractDialog>
+        ) : (
+          <></>
+        )}
       </div>
       <CompanyDetailsHeader title="Graph" />
       <div className="w-3/4 h-96 lg:h-[calc(100vh-20rem)] flex flex-col self-center p-2">

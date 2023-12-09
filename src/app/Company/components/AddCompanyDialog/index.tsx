@@ -15,11 +15,11 @@ import { useCompany } from "@/hooks/useCompany";
 import { useError } from "@/hooks/useError";
 import { useLoading } from "@/hooks/useLoading";
 import { IAddCompanyFormData } from "@/types/company/IAddCompanyFormData";
-import { IAddCompanyDialog } from "@/types/dialog/IAddCompanyDialog";
+import { IDialog } from "@/types/dialog/IDialog";
 import { AxiosError } from "axios";
 import { FormEvent, useState } from "react";
 
-export default function AddCompanyDialog({ children }: IAddCompanyDialog) {
+export default function AddCompanyDialog({ children }: IDialog) {
   const { showError } = useError();
   const { showLoading, closeLoading } = useLoading();
   const { addCompany } = useCompany();
