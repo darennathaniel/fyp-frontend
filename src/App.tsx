@@ -10,6 +10,7 @@ import { Toaster } from "./components/ui/toaster";
 import ErrorPopup from "./components/ErrorPopup";
 import Loading from "./components/Loading";
 import Profile from "./app/Profile";
+import Product from "./app/Product";
 
 export default function App() {
   return (
@@ -22,7 +23,8 @@ export default function App() {
           <Route element={<NavbarApp />}>
             <Route path="/" element={<Home />} />
             <Route path="/company/*" element={<Company />} />
-            <Route path="/supply" element={<Supply />} />
+            <Route path="/supply/*" element={<Supply />} />
+            <Route path="/product" element={<Product />} />
             <Route path="/profile/*" element={<Profile />} />
             <Route path="/404" element={<NotFoundPage />} />
             <Route path="*" element={<Navigate to="/404" />} />

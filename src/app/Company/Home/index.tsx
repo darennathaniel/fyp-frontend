@@ -35,58 +35,60 @@ export default function CompanyHome() {
     });
   }, []);
   return (
-    <div>
-      <Tabs className="w-full items-center flex flex-col" defaultValue="graph">
-        <div className="h-16 w-3/4 flex justify-between items-center">
+    <Tabs className="w-full items-center flex flex-col" defaultValue="graph">
+      <div className="h-16 w-3/4 flex justify-between items-center">
+        <Button className="w-28 cursor-default hidden md:block"></Button>
+        <TabsList className="md:w-1/3 w-3/5 bg-zinc-700">
+          <TabsTrigger
+            value="graph"
+            className="rounded-lg text-gray-400 hover:text-white w-1/2 h-full data-[state=active]:bg-zinc-950 data-[state=active]:text-white data-[state=active]:shadow-sm"
+          >
+            Graph
+          </TabsTrigger>
+          <TabsTrigger
+            value="table"
+            className="w-1/2 rounded-lg text-gray-400 hover:text-white h-full data-[state=active]:bg-zinc-950 data-[state=active]:text-white data-[state=active]:shadow-sm"
+          >
+            Table
+          </TabsTrigger>
+        </TabsList>
+        {user.isOwner ? (
+          <AddCompanyDialog>
+            <Button
+              type="button"
+              variant="outline"
+              className="hover:bg-gray-100 active:bg-gray-300 hover:text-zinc-950 w-28"
+            >
+              Add Company
+            </Button>
+          </AddCompanyDialog>
+        ) : (
           <Button className="w-28 cursor-default hidden md:block"></Button>
-          <TabsList className="md:w-1/3 w-3/5 bg-zinc-700">
-            <TabsTrigger
-              value="graph"
-              className="rounded-lg text-gray-400 hover:text-white w-1/2 h-full data-[state=active]:bg-zinc-950 data-[state=active]:text-white data-[state=active]:shadow-sm"
-            >
-              Graph
-            </TabsTrigger>
-            <TabsTrigger
-              value="table"
-              className="w-1/2 rounded-lg text-gray-400 hover:text-white h-full data-[state=active]:bg-zinc-950 data-[state=active]:text-white data-[state=active]:shadow-sm"
-            >
-              Table
-            </TabsTrigger>
-          </TabsList>
-          {user.isOwner ? (
-            <AddCompanyDialog>
-              <Button
-                type="button"
-                variant="outline"
-                className="hover:bg-gray-100 active:bg-gray-300 hover:text-zinc-950 w-28"
-              >
-                Add Company
-              </Button>
-            </AddCompanyDialog>
-          ) : (
-            <Button className="w-28 cursor-default hidden md:block"></Button>
-          )}
+        )}
+      </div>
+      <TabsContent value="graph" className="w-full flex justify-center">
+        <div className="h-[calc(100vh-9rem)] w-3/4 p-2">
+          <ReactFlow
+            className="bg-zinc-700 border-white border-2 rounded-xl shadow-zinc-500 shadow-md"
+            nodes={nodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            nodeTypes={nodeTypes}
+            fitView
+          ></ReactFlow>
         </div>
-        <TabsContent value="graph" className="w-full flex justify-center">
-          <div className="h-[calc(100vh-9rem)] w-3/4 p-2">
-            <ReactFlow
-              className="bg-zinc-700 border-white border-2 rounded-xl shadow-zinc-500 shadow-md"
-              nodes={nodes}
-              edges={edges}
-              onNodesChange={onNodesChange}
-              onEdgesChange={onEdgesChange}
-              onConnect={onConnect}
-              nodeTypes={nodeTypes}
-              fitView
-            ></ReactFlow>
-          </div>
-        </TabsContent>
-        <TabsContent value="table" className="w-full flex justify-center">
-          <div className="w-3/4 p-2">
-            <DataTable columns={columns} data={data ?? []} limit={10} />
-          </div>
-        </TabsContent>
-      </Tabs>
-    </div>
+      </TabsContent>
+      <TabsContent value="table" className="w-full flex justify-center">
+        <div className="w-3/4 p-2">
+          <DataTable
+            columns={columns}
+            data={data ?? []}
+            total={Math.ceil((data ?? []).length / 10)}
+          />
+        </div>
+      </TabsContent>
+    </Tabs>
   );
 }
