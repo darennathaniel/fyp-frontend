@@ -6,7 +6,6 @@ import {
 } from "@radix-ui/react-icons";
 import { Table } from "@tanstack/react-table";
 
-import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -14,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import StyledButton from "../ui/StyledButton";
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
@@ -35,7 +35,7 @@ export function DataTablePagination<TData>({
             <SelectValue placeholder={table.getState().pagination.pageSize} />
           </SelectTrigger>
           <SelectContent side="top" className="bg-zinc-950 text-white">
-            {[10, 20, 30, 40, 50].map((pageSize) => (
+            {[1, 10, 20, 30, 40, 50].map((pageSize) => (
               <SelectItem
                 key={pageSize}
                 value={`${pageSize}`}
@@ -55,7 +55,7 @@ export function DataTablePagination<TData>({
         </div>
       </div>
       <div className="flex items-center space-x-2">
-        <Button
+        <StyledButton
           variant="outline"
           className="hidden h-8 w-8 p-0 lg:flex"
           onClick={() => table.setPageIndex(0)}
@@ -63,8 +63,8 @@ export function DataTablePagination<TData>({
         >
           <span className="sr-only">Go to first page</span>
           <DoubleArrowLeftIcon className="h-4 w-4" />
-        </Button>
-        <Button
+        </StyledButton>
+        <StyledButton
           variant="outline"
           className="h-8 w-8 p-0"
           onClick={() => table.previousPage()}
@@ -72,8 +72,8 @@ export function DataTablePagination<TData>({
         >
           <span className="sr-only">Go to previous page</span>
           <ChevronLeftIcon className="h-4 w-4" />
-        </Button>
-        <Button
+        </StyledButton>
+        <StyledButton
           variant="outline"
           className="h-8 w-8 p-0"
           onClick={() => table.nextPage()}
@@ -81,8 +81,8 @@ export function DataTablePagination<TData>({
         >
           <span className="sr-only">Go to next page</span>
           <ChevronRightIcon className="h-4 w-4" />
-        </Button>
-        <Button
+        </StyledButton>
+        <StyledButton
           variant="outline"
           className="hidden h-8 w-8 p-0 lg:flex"
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
@@ -90,7 +90,7 @@ export function DataTablePagination<TData>({
         >
           <span className="sr-only">Go to last page</span>
           <DoubleArrowRightIcon className="h-4 w-4" />
-        </Button>
+        </StyledButton>
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ import {
 } from "@reactflow/core";
 import { AxiosError } from "axios";
 import { useEffect, useState, useCallback } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import CompanyDetailsHeader from "../components/CompanyDetailsHeader";
 import SendContractDialog from "../components/SendContractDialog";
 import { prerequisiteColumns, productColumns } from "./columns";
@@ -39,6 +39,7 @@ export default function CompanyDetails() {
   const { getCompany } = useCompany();
   const { getProductByCompany, getPrerequisiteByCompany } = useProduct();
   const user = useAppSelector((state) => state.app.user);
+  const navigate = useNavigate();
   useEffect(() => {
     showLoading();
     getCompany(owner as string)
@@ -53,6 +54,7 @@ export default function CompanyDetails() {
         if (err instanceof AxiosError) {
           showError(err);
         }
+        navigate("/404");
       })
       .finally(() => closeLoading());
     showLoading();
@@ -124,17 +126,13 @@ export default function CompanyDetails() {
       <CompanyDetailsHeader title="Product Supply" />
       <div className="w-full h-1/2 lg:min-h-[calc(100vh-20rem)] flex items-center justify-center">
         <div className="w-3/4">
-          <DataTable columns={productColumns} data={product ?? []} limit={10} />
+          <DataTable columns={productColumns} data={product ?? []} />
         </div>
       </div>
       <CompanyDetailsHeader title="Prerequisite" />
       <div className="w-full h-1/2 lg:min-h-[calc(100vh-20rem)] flex items-center justify-center">
         <div className="w-3/4">
-          <DataTable
-            columns={prerequisiteColumns}
-            data={prerequisite ?? []}
-            limit={10}
-          />
+          <DataTable columns={prerequisiteColumns} data={prerequisite ?? []} />
         </div>
       </div>
     </div>

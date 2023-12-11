@@ -80,7 +80,6 @@ export default function ProfileContract() {
             <DataTable
               data={incomingData}
               columns={incomingColumns}
-              limit={10}
               meta={{
                 data: incomingData,
                 setData: setIncomingData,
@@ -90,16 +89,12 @@ export default function ProfileContract() {
         </TabsContent>
         <TabsContent value="outgoing" className="w-full flex justify-center">
           <div className="w-full">
-            <DataTable
-              data={outgoingData}
-              columns={outgoingColumns}
-              limit={10}
-            />
+            <DataTable data={outgoingData} columns={outgoingColumns} />
           </div>
         </TabsContent>
         <TabsContent value="history" className="w-full flex justify-center">
           <div className="w-full">
-            <DataTable data={historyData} columns={historyColumns} limit={10} />
+            <DataTable data={historyData} columns={historyColumns} />
           </div>
         </TabsContent>
       </Tabs>

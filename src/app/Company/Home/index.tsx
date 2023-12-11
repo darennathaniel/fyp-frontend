@@ -82,11 +82,7 @@ export default function CompanyHome() {
       </TabsContent>
       <TabsContent value="table" className="w-full flex justify-center">
         <div className="w-3/4 p-2">
-          <DataTable
-            columns={columns}
-            data={data ?? []}
-            total={Math.ceil((data ?? []).length / 10)}
-          />
+          <DataTable columns={columns} data={data ?? []} />
         </div>
       </TabsContent>
     </Tabs>
