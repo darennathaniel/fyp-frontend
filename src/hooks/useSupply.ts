@@ -19,5 +19,15 @@ export function useSupply() {
     );
     return { ...response.data.data[0], supplies: transformed_response };
   };
-  return { getAllSupply };
+  const convertToSupply = async (
+    product_id: number,
+    number_of_supply: number
+  ) => {
+    const response = await axiosPrivate.post("supply/", {
+      product_id,
+      number_of_supply,
+    });
+    return response;
+  };
+  return { getAllSupply, convertToSupply };
 }

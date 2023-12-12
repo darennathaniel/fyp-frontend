@@ -24,7 +24,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/company/*" element={<Company />} />
             <Route path="/supply/*" element={<Supply />} />
-            <Route path="/product" element={<Product />} />
+            <Route path="/product/*" element={<Product />} />
             <Route path="/profile/*" element={<Profile />} />
             <Route path="/404" element={<NotFoundPage />} />
             <Route path="*" element={<Navigate to="/404" />} />

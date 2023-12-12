@@ -1,7 +1,9 @@
 import { DataTableColumnHeader } from "@/components/DataTable/DataTableColumnHeader";
+import StyledButton from "@/components/ui/StyledButton";
 import { IProduct } from "@/types/product/IProduct";
 import { ISupplyMongo } from "@/types/supply/ISupplyMongo";
 import { ColumnDef } from "@tanstack/react-table";
+import { Link } from "react-router-dom";
 
 export const columns: ColumnDef<ISupplyMongo>[] = [
   {
@@ -43,6 +45,19 @@ export const columns: ColumnDef<ISupplyMongo>[] = [
             {row.getValue("quantityLeft")}
           </span>
         </div>
+      );
+    },
+  },
+  {
+    id: "action",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Action" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <Link to={`${row.getValue("supplyId")}`}>
+          <StyledButton text="More Info" />
+        </Link>
       );
     },
   },

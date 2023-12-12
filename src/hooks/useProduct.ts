@@ -19,5 +19,9 @@ export function useProduct() {
     const data = response.data.data[0];
     return data;
   };
-  return { getProductByCompany, getPrerequisiteByCompany };
+  const getMyProduct = async () => {
+    const response = await axiosPrivate.get("product/my");
+    return response.data.data[0];
+  };
+  return { getProductByCompany, getPrerequisiteByCompany, getMyProduct };
 }
