@@ -10,25 +10,47 @@ import { Separator } from "@/components/ui/separator";
 import StyledButton from "@/components/ui/StyledButton";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useAppSelector } from "@/hooks/useAppSelector";
+import { useError } from "@/hooks/useError";
 import { useLoading } from "@/hooks/useLoading";
 import { useProduct } from "@/hooks/useProduct";
 import { IProduct } from "@/types/product/IProduct";
 import { ISupply } from "@/types/supply/ISupply";
+import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
+import { columns } from "./columns";
 import ConvertToSupplyDialog from "./components/ConvertToSupplyDialog";
 
 export default function ProductHome() {
   const user = useAppSelector((state) => state.app.user);
-  const { getMyProduct } = useProduct();
+  const { getMyProduct, getAllProducts } = useProduct();
   const [products, setProducts] = useState<(IProduct & ISupply)[]>([]);
+  const [allProducts, setAllProducts] = useState<IProduct[]>([]);
   const { showLoading, closeLoading } = useLoading();
+  const { showError } = useError();
   useEffect(() => {
     showLoading();
-    getMyProduct()
-      .then((response) => setProducts(response))
+    getAllProducts()
+      .then((response) => setAllProducts(response))
+      .catch((err) => {
+        if (err instanceof AxiosError) showError(err);
+      })
       .finally(() => closeLoading());
+    if (user.isAuthenticated) {
+      showLoading();
+      getMyProduct()
+        .then((response) => setProducts(response))
+        .finally(() => closeLoading());
+    }
   }, []);
-  if (!user.isAuthenticated) return <div>test</div>;
+  if (!user.isAuthenticated) {
+    return (
+      <div className="w-full flex items-center justify-center h-[calc(100vh-8rem)]">
+        <div className="w-3/4">
+          <DataTable data={allProducts} columns={columns} />
+        </div>
+      </div>
+    );
+  }
   return (
     <Tabs
       className="w-full items-center flex flex-col space-y-6 p-3"
@@ -90,13 +112,10 @@ export default function ProductHome() {
         </div>
       </TabsContent>
       <TabsContent value="all_product" className="w-full flex justify-center">
-        <div className="w-3/4">
-          {/* <DataTable
-                data={data}
-                columns={columns}
-                totalPages={pageCount}
-                pathname="/product"
-              /> */}
+        <div className="w-full flex items-center justify-center h-[calc(100vh-20rem)]">
+          <div className="w-3/4">
+            <DataTable data={allProducts} columns={columns} />
+          </div>
         </div>
       </TabsContent>
     </Tabs>
