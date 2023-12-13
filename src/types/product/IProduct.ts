@@ -3,3 +3,13 @@ export interface IProduct {
   productName: string;
   has_recipe: boolean;
 }
+
+export interface IRecipe {
+  productId?: number;
+  productName?: string;
+  quantity?: number;
+}
+
+export interface IAddProductForm {
+  productName: { value: string };
+}
