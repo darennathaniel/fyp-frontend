@@ -26,12 +26,16 @@ import { useLoading } from "@/hooks/useLoading";
 import { useProduct } from "@/hooks/useProduct";
 import { useSuccess } from "@/hooks/useSuccess";
 import { ICompany } from "@/types/company/ICompany";
-import { IDialog } from "@/types/dialog/IDialog";
+import { IProductDialog } from "@/types/dialog/IDialog";
 import { IAddProductForm } from "@/types/product/IProduct";
 import { AxiosError } from "axios";
 import { FormEvent, useEffect, useState } from "react";
 
-export default function AddProductWithoutRecipeDialog({ children }: IDialog) {
+export default function AddProductWithoutRecipeDialog({
+  children,
+  allData,
+  setAllData,
+}: IProductDialog) {
   const [open, setOpen] = useState<boolean>(false);
   const { showLoading, closeLoading } = useLoading();
   const { showError } = useError();
@@ -61,6 +65,8 @@ export default function AddProductWithoutRecipeDialog({ children }: IDialog) {
         selectedCompany
       );
       showSuccess(response);
+      if (allData && setAllData)
+        setAllData([...allData, response.data.data[0]]);
       setOpen(false);
     } catch (err) {
       if (err instanceof AxiosError) showError(err);

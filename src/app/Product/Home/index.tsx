@@ -60,7 +60,10 @@ export default function ProductHome() {
     >
       <div className="w-3/4 flex items-center justify-between">
         {user.isAuthenticated && user.isOwner ? (
-          <AddProductWithoutRecipeDialog>
+          <AddProductWithoutRecipeDialog
+            allData={allProducts}
+            setAllData={setAllProducts}
+          >
             <StyledButton className="w-content">
               Add Product W/O Recipe
             </StyledButton>
