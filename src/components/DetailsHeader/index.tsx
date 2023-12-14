@@ -1,7 +1,7 @@
 import { Separator } from "@/components/ui/separator";
-import { ICompanyDetailsHeader } from "@/types/company/ICompanyDetailsHeader";
+import { IDetailsHeader } from "@/types/header/IDetailsHeader";
 
-export default function CompanyDetailsHeader(props: ICompanyDetailsHeader) {
+export default function DetailsHeader(props: IDetailsHeader) {
   return (
     <div className="flex w-full items-center space-x-6 justify-center">
       <Separator className="bg-white w-5/12" />

@@ -1,4 +1,5 @@
 import { DataTable } from "@/components/DataTable";
+import DetailsHeader from "@/components/DetailsHeader";
 import StyledButton from "@/components/ui/StyledButton";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { useCompany } from "@/hooks/useCompany";
@@ -17,7 +18,6 @@ import {
 import { AxiosError } from "axios";
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router";
-import CompanyDetailsHeader from "../components/CompanyDetailsHeader";
 import SendContractDialog from "../components/SendContractDialog";
 import { prerequisiteColumns, productColumns } from "./columns";
 
@@ -110,7 +110,7 @@ export default function CompanyDetails() {
           <></>
         )}
       </div>
-      <CompanyDetailsHeader title="Graph" />
+      <DetailsHeader title="Graph" />
       <div className="w-3/4 h-96 lg:h-[calc(100vh-20rem)] flex flex-col self-center p-2">
         <ReactFlow
           className="bg-zinc-700 border-white border-2 rounded-xl shadow-zinc-500 shadow-md"
@@ -123,13 +123,13 @@ export default function CompanyDetails() {
           connectOnClick={false}
         ></ReactFlow>
       </div>
-      <CompanyDetailsHeader title="Product Supply" />
+      <DetailsHeader title="Product Supply" />
       <div className="w-full h-1/2 lg:min-h-[calc(100vh-20rem)] flex items-center justify-center">
         <div className="w-3/4">
           <DataTable columns={productColumns} data={product ?? []} />
         </div>
       </div>
-      <CompanyDetailsHeader title="Prerequisite" />
+      <DetailsHeader title="Prerequisite" />
       <div className="w-full h-1/2 lg:min-h-[calc(100vh-20rem)] flex items-center justify-center">
         <div className="w-3/4">
           <DataTable columns={prerequisiteColumns} data={prerequisite ?? []} />
