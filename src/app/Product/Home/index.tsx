@@ -18,8 +18,10 @@ import { IProduct } from "@/types/product/IProduct";
 import { ISupply } from "@/types/supply/ISupply";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { columns } from "./columns";
-import AddProductDialog from "./components/AddProductDialog";
+import AddProductWithoutRecipeDialog from "./components/AddProductWithoutRecipeDialog";
+import AddProductWithRecipeDialog from "./components/AddProductWithRecipeDialog";
 import ConvertToSupplyDialog from "./components/ConvertToSupplyDialog";
 
 export default function ProductHome() {
@@ -57,7 +59,15 @@ export default function ProductHome() {
       defaultValue="my_product"
     >
       <div className="w-3/4 flex items-center justify-between">
-        <Button className="w-28 cursor-default hidden md:block"></Button>
+        {user.isAuthenticated && user.isOwner ? (
+          <AddProductWithoutRecipeDialog>
+            <StyledButton className="w-content">
+              Add Product W/O Recipe
+            </StyledButton>
+          </AddProductWithoutRecipeDialog>
+        ) : (
+          <Button className="w-44 cursor-default hidden md:block"></Button>
+        )}
         <TabsList className="w-1/4 bg-zinc-700">
           <TabsTrigger
             value="my_product"
@@ -72,14 +82,16 @@ export default function ProductHome() {
             All Product
           </TabsTrigger>
         </TabsList>
-        <AddProductDialog
+        <AddProductWithRecipeDialog
           data={products}
           setData={setProducts}
           allData={allProducts}
           setAllData={setAllProducts}
         >
-          <StyledButton className="w-28">Add Product</StyledButton>
-        </AddProductDialog>
+          <StyledButton className="w-content">
+            Add Product With Recipe
+          </StyledButton>
+        </AddProductWithRecipeDialog>
       </div>
       <TabsContent value="my_product" className="w-full flex justify-center">
         {products.length > 0 ? (
@@ -87,8 +99,11 @@ export default function ProductHome() {
             {products.map((product) => (
               <Card className="w-full bg-zinc-950 text-white">
                 <CardHeader className="space-y-1">
-                  <CardTitle className="text-2xl">
-                    {product.productName}
+                  <CardTitle className="text-2xl flex justify-between items-center">
+                    <div>{product.productName}</div>
+                    <Link to={product.productId.toString()}>
+                      <StyledButton>More info</StyledButton>
+                    </Link>
                   </CardTitle>
                   <Separator className="bg-white" />
                 </CardHeader>

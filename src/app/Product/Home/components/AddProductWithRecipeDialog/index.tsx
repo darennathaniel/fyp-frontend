@@ -29,7 +29,7 @@ import { IAddProductForm, IProduct, IRecipe } from "@/types/product/IProduct";
 import { AxiosError } from "axios";
 import { FormEvent, useEffect, useState } from "react";
 
-export default function AddProductDialog({
+export default function AddProductWithRecipeDialog({
   data,
   setData,
   allData,
@@ -174,6 +174,7 @@ export default function AddProductDialog({
                       newRecipes.splice(idx, 1);
                       setRecipes([...newRecipes]);
                     }}
+                    type="button"
                   >
                     Delete
                   </StyledButton>

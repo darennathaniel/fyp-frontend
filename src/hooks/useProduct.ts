@@ -48,11 +48,22 @@ export function useProduct() {
     });
     return response;
   };
+  const addProductWithoutRecipe = async (
+    productName: string,
+    owner: string
+  ) => {
+    const response = await axiosPrivate.post("product/no_recipe", {
+      product_name: productName,
+      owner,
+    });
+    return response;
+  };
   return {
     getProductByCompany,
     getPrerequisiteByCompany,
     getMyProduct,
     getAllProducts,
     addProductWithRecipe,
+    addProductWithoutRecipe,
   };
 }
