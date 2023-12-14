@@ -16,8 +16,8 @@ export interface IConvertToSupplyDialog extends IProductDialog {
 }
 
 export interface IProductDialog extends IDialog {
-  data: (IProduct & ISupply)[];
-  setData: React.Dispatch<React.SetStateAction<(IProduct & ISupply)[]>>;
+  data?: (IProduct & ISupply)[];
+  setData?: React.Dispatch<React.SetStateAction<(IProduct & ISupply)[]>>;
   allData?: IProduct[];
   setAllData?: React.Dispatch<React.SetStateAction<IProduct[]>>;
 }
