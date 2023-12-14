@@ -41,14 +41,16 @@ export default function ConvertToSupplyDialog({
       const { quantity } = e.target as typeof e.target & IConvertToSupplyForm;
       const response = await convertToSupply(product.productId, quantity.value);
       const responseData = response.data.data[0] as ISupplyMongo;
-      const newData = data.map((product) => {
-        if (product.productId === responseData.productId) {
-          return { ...product, total: product.total + responseData.quantity };
-        } else {
-          return product;
-        }
-      });
-      setData(newData);
+      if (data && setData) {
+        const newData = data.map((product) => {
+          if (product.productId === responseData.productId) {
+            return { ...product, total: product.total + responseData.quantity };
+          } else {
+            return product;
+          }
+        });
+        setData(newData);
+      }
       showSuccess(response);
       setOpen(false);
     } catch (err) {

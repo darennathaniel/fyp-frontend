@@ -76,6 +76,7 @@ export default function CompanyHome() {
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
             nodeTypes={nodeTypes}
+            connectOnClick={false}
             fitView
           ></ReactFlow>
         </div>

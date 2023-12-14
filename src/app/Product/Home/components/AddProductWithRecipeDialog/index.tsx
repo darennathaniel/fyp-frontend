@@ -52,7 +52,7 @@ export default function AddProductWithRecipeDialog({
       const { productName } = e.target as typeof e.target & IAddProductForm;
       const response = await addProductWithRecipe(productName.value, recipes);
       showSuccess(response);
-      setData([...data, response.data.data[0]]);
+      if (data && setData) setData([...data, response.data.data[0]]);
       if (allData && setAllData)
         setAllData([...allData, response.data.data[0]]);
       setOpen(false);
