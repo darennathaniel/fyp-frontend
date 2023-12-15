@@ -27,11 +27,11 @@ export default function CompanyHome() {
   const { getAllCompany } = useCompany();
   useEffect(() => {
     getAllCompany().then((result) => {
-      const companies = result.companies;
-      const edges = result.edges;
+      const companies = result[1].companies;
+      const edges = result[1].edges;
       setNodes(companies);
       setEdges(edges);
-      setData(companies);
+      setData(result[0]);
     });
   }, []);
   return (
