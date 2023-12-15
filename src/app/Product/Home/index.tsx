@@ -22,7 +22,9 @@ import { Link } from "react-router-dom";
 import { columns } from "./columns";
 import AddProductWithoutRecipeDialog from "./components/AddProductWithoutRecipeDialog";
 import AddProductWithRecipeDialog from "./components/AddProductWithRecipeDialog";
+import ConvertPrerequisiteToSupplyDialog from "./components/ConvertPrerequisiteToSupplyDialog";
 import ConvertToSupplyDialog from "./components/ConvertToSupplyDialog";
+import RecipesDialog from "./components/RecipesDialog";
 
 export default function ProductHome() {
   const user = useAppSelector((state) => state.app.user);
@@ -124,16 +126,29 @@ export default function ProductHome() {
                     </div>
                   </div>
                 </CardContent>
-                <CardFooter className="grid gap-2">
+                <CardFooter className="grid gap-2 grid-cols-2">
                   {product.has_recipe ? (
-                    <StyledButton>Convert Prerequisite to Supply</StyledButton>
+                    <>
+                      <RecipesDialog product={product}>
+                        <StyledButton>Recipe List</StyledButton>
+                      </RecipesDialog>
+                      <ConvertPrerequisiteToSupplyDialog
+                        product={product}
+                        data={products}
+                        setData={setProducts}
+                      >
+                        <StyledButton>Convert Prerequisite</StyledButton>
+                      </ConvertPrerequisiteToSupplyDialog>
+                    </>
                   ) : (
                     <ConvertToSupplyDialog
                       product={product}
                       data={products}
                       setData={setProducts}
                     >
-                      <StyledButton>Convert to Supply</StyledButton>
+                      <StyledButton className="col-span-2">
+                        Convert to Supply
+                      </StyledButton>
                     </ConvertToSupplyDialog>
                   )}
                 </CardFooter>

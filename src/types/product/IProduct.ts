@@ -10,6 +10,12 @@ export interface IRecipe {
   quantity?: number;
 }
 
+export interface IRecipeDisplay {
+  product: IProduct;
+  inventory_quantity: number;
+  recipe_quantity: number;
+}
+
 export interface IAddProductForm {
   productName: { value: string };
 }
