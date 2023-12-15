@@ -15,6 +15,7 @@ import { Separator } from "@/components/ui/separator";
 import StyledButton from "@/components/ui/StyledButton";
 import { ISupplyMongo } from "@/types/supply/ISupplyMongo";
 import { Handle, NodeProps, Position } from "@reactflow/core";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 interface CustomNodeData {
@@ -25,6 +26,7 @@ interface CustomNodeData {
 export default function CustomNode(props: NodeProps) {
   const isConnectable = props.isConnectable;
   const data: CustomNodeData = props.data;
+  const [open, setOpen] = useState<boolean>(false);
   return (
     <div>
       <Handle
@@ -33,7 +35,7 @@ export default function CustomNode(props: NodeProps) {
         id="top"
         isConnectable={isConnectable}
       />
-      <Popover>
+      <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger>
           <StyledButton className="bg-zinc-950 border border-white rounded-md w-fit text-center">
             {data.label}
@@ -72,6 +74,9 @@ export default function CustomNode(props: NodeProps) {
               <Link
                 to={`/supply/${data.meta.supplyId.toString()}`}
                 className="flex justify-end"
+                onClick={() => {
+                  setOpen(false);
+                }}
               >
                 <StyledButton text="Click to view more!" />
               </Link>

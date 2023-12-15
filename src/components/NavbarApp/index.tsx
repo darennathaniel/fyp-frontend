@@ -36,7 +36,7 @@ export default function NavbarApp() {
     setCurrentLocation(location.pathname);
   }, [location.pathname]);
   useEffect(() => {
-    getUser();
+    getUser().catch(() => logout());
   }, []);
   return (
     <div>
