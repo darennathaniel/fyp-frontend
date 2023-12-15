@@ -38,7 +38,7 @@ export function useSupply() {
       product_id: productId,
       number_of_supply: quantity,
     });
-    return response.data.data[0];
+    return response;
   };
   const getSupply = async (supplyId: string) => {
     const response = await axiosPrivate.get("supply/", {
