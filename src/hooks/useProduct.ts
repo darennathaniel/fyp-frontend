@@ -64,6 +64,12 @@ export function useProduct() {
     });
     return response.data.data[0];
   };
+  const getProduct = async (productId: string | number) => {
+    const response = await axiosPrivate.get("/product", {
+      params: { product_id: productId },
+    });
+    return response.data.data[0];
+  };
   return {
     getProductByCompany,
     getPrerequisiteByCompany,
@@ -72,5 +78,6 @@ export function useProduct() {
     addProductWithRecipe,
     addProductWithoutRecipe,
     getRecipe,
+    getProduct,
   };
 }
