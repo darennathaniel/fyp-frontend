@@ -1,3 +1,4 @@
+import { DataTable } from "@/components/DataTable";
 import {
   Dialog,
   DialogTrigger,
@@ -17,6 +18,7 @@ import { IRecipeDisplay } from "@/types/product/IProduct";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
+import { columns } from "./columns";
 
 export default function RecipesDialog({
   children,
@@ -39,7 +41,7 @@ export default function RecipesDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-[500px] bg-zinc-950 text-white">
+      <DialogContent className="bg-zinc-950 text-white max-w-fit">
         <DialogHeader>
           <DialogTitle>
             Recipe: {product.productName} - {product.productId}
@@ -49,28 +51,7 @@ export default function RecipesDialog({
           </DialogDescription>
         </DialogHeader>
         <Separator className="bg-white" />
-        <div className="grid gap-4 grid-cols-5">
-          <div className="col-span-3 font-semibold">Product</div>
-          <div className="font-semibold">Recipe</div>
-          <div className="font-semibold">Inventory</div>
-          {recipes.map((recipe) => (
-            <>
-              <div className="col-span-3">
-                {recipe.product.productName} - {recipe.product.productId}
-              </div>
-              <div>{recipe.recipe_quantity}</div>
-              <div
-                className={`${
-                  recipe.inventory_quantity >= recipe.recipe_quantity
-                    ? "text-green-800"
-                    : "text-red-900"
-                }`}
-              >
-                {recipe.inventory_quantity}
-              </div>
-            </>
-          ))}
-        </div>
+        <DataTable columns={columns} data={recipes} />
         <Separator className="bg-white my-4" />
         <DialogFooter>
           <DialogClose>

@@ -1,3 +1,5 @@
+import { ICompanyProduct } from "../company/ICompanyProduct";
+
 export interface IProduct {
   productId: number;
   productName: string;
@@ -14,6 +16,7 @@ export interface IRecipeDisplay {
   product: IProduct;
   inventory_quantity: number;
   recipe_quantity: number;
+  product_owner: ICompanyProduct;
 }
 
 export interface IAddProductForm {

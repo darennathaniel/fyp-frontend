@@ -88,11 +88,24 @@ export function useRequest() {
     });
     return response;
   };
+  const sendRequest = async (
+    to: string,
+    productId: string | number,
+    quantity: number
+  ) => {
+    const response = await axiosPrivate.post("request", {
+      to,
+      product_id: productId,
+      quantity,
+    });
+    return response;
+  };
   return {
     getIncomingRequest,
     getOutgoingRequest,
     getHistoryRequest,
     approveRequest,
     declineRequest,
+    sendRequest,
   };
 }
