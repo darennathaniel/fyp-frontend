@@ -34,7 +34,7 @@ export const columns: ColumnDef<ISupplyMongo>[] = [
     },
   },
   {
-    accessorKey: "quantityLeft",
+    accessorKey: "quantity",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Supply Quantity" />
     ),
@@ -42,7 +42,7 @@ export const columns: ColumnDef<ISupplyMongo>[] = [
       return (
         <div className="flex space-x-2">
           <span className="max-w-[500px] truncate font-medium">
-            {row.getValue("quantityLeft")}
+            {row.getValue("quantity")}
           </span>
         </div>
       );

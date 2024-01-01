@@ -10,6 +10,7 @@ import AddCompanyDialog from "../components/AddCompanyDialog";
 import { ICompany } from "@/types/company/ICompany";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import CustomNode from "./node";
+import PageHeader from "@/components/PageHeader";
 
 const nodeTypes = {
   customNode: CustomNode,
@@ -66,7 +67,16 @@ export default function CompanyHome() {
           <Button className="w-28 cursor-default hidden md:block"></Button>
         )}
       </div>
-      <TabsContent value="graph" className="w-full flex justify-center">
+      <TabsContent
+        value="graph"
+        className="w-full flex justify-center items-center flex-col"
+      >
+        <div className="w-3/4">
+          <PageHeader
+            title="All Company Graph"
+            description="Below is a graph showing the dependencies of each company."
+          />
+        </div>
         <div className="h-[calc(100vh-9rem)] w-3/4 p-2">
           <ReactFlow
             className="bg-zinc-700 border-white border-2 rounded-xl shadow-zinc-500 shadow-md"
@@ -81,7 +91,16 @@ export default function CompanyHome() {
           ></ReactFlow>
         </div>
       </TabsContent>
-      <TabsContent value="table" className="w-full flex justify-center">
+      <TabsContent
+        value="table"
+        className="w-full flex justify-center flex-col items-center"
+      >
+        <div className="w-3/4">
+          <PageHeader
+            title="List of All Company"
+            description="Below is a table listing all companies that is currently active."
+          />
+        </div>
         <div className="w-3/4 p-2">
           <DataTable columns={columns} data={data ?? []} />
         </div>

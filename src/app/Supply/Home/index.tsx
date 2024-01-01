@@ -1,4 +1,5 @@
 import { DataTable } from "@/components/DataTable";
+import PageHeader from "@/components/PageHeader";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { useError } from "@/hooks/useError";
@@ -33,14 +34,22 @@ export default function SupplyHome() {
       .finally(() => closeLoading());
   }, [search]);
   return (
-    <div className="w-full flex justify-center items-center h-[calc(100vh-8rem)]">
-      <div className="w-3/4">
-        <DataTable
-          data={data}
-          columns={columns}
-          totalPages={pageCount}
-          pathname="/supply"
-        />
+    <div>
+      <div className="w-full flex justify-center items-center flex-col h-[calc(100vh-8rem)]">
+        <div className="w-3/4">
+          <PageHeader
+            title="List of Past Supplies"
+            description="Below is a table that lists down all supplies that has been done over the past."
+          />
+        </div>
+        <div className="w-3/4">
+          <DataTable
+            data={data}
+            columns={columns}
+            totalPages={pageCount}
+            pathname="/supply"
+          />
+        </div>
       </div>
     </div>
   );

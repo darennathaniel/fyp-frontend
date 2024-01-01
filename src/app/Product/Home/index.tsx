@@ -1,4 +1,5 @@
 import { DataTable } from "@/components/DataTable";
+import PageHeader from "@/components/PageHeader";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -48,9 +49,15 @@ export default function ProductHome() {
   }, []);
   if (!user.isAuthenticated) {
     return (
-      <div className="w-full flex items-center justify-center h-[calc(100vh-8rem)]">
-        <div className="w-3/4">
-          <DataTable data={allProducts} columns={columns} />
+      <div>
+        <PageHeader
+          title="List of All Products"
+          description="Below is a table that lists down all products that has been created."
+        />
+        <div className="w-full flex items-center justify-center h-[calc(100vh-10rem)]">
+          <div className="w-3/4">
+            <DataTable data={allProducts} columns={columns} />
+          </div>
         </div>
       </div>
     );
@@ -98,7 +105,16 @@ export default function ProductHome() {
           </StyledButton>
         </AddProductWithRecipeDialog>
       </div>
-      <TabsContent value="my_product" className="w-full flex justify-center">
+      <TabsContent
+        value="my_product"
+        className="w-full flex justify-center flex-col items-center"
+      >
+        <div className="w-3/4">
+          <PageHeader
+            title="List of My Products"
+            description="Below is a table that lists down all of your products that you have created."
+          />
+        </div>
         {products.length > 0 ? (
           <div className={`w-3/4 grid grid-cols-1 md:grid-cols-2 gap-4`}>
             {products.map((product) => (
@@ -163,7 +179,13 @@ export default function ProductHome() {
         )}
       </TabsContent>
       <TabsContent value="all_product" className="w-full flex justify-center">
-        <div className="w-full flex items-center justify-center h-[calc(100vh-20rem)]">
+        <div className="w-full flex items-center justify-center flex-col h-[calc(100vh-20rem)]">
+          <div className="w-3/4">
+            <PageHeader
+              title="List of All Products"
+              description="Below is a table that lists down all products that has been created."
+            />
+          </div>
           <div className="w-3/4">
             <DataTable data={allProducts} columns={columns} />
           </div>
