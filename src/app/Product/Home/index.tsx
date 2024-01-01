@@ -50,11 +50,13 @@ export default function ProductHome() {
   if (!user.isAuthenticated) {
     return (
       <div>
-        <PageHeader
-          title="List of All Products"
-          description="Below is a table that lists down all products that has been created."
-        />
-        <div className="w-full flex items-center justify-center h-[calc(100vh-10rem)]">
+        <div className="w-full flex items-center justify-center h-[calc(100vh-8rem)] flex-col">
+          <div className="w-3/4">
+            <PageHeader
+              title="List of All Products"
+              description="Below is a table that lists down all products that has been created."
+            />
+          </div>
           <div className="w-3/4">
             <DataTable data={allProducts} columns={columns} />
           </div>

@@ -41,7 +41,10 @@ export const columns: ColumnDef<ICompany>[] = [
       />
     ),
     cell: ({ row }) => (
-      <Link to={`${row.getValue("owner")}`} className="flex justify-end">
+      <Link
+        to={`/company/${row.getValue("owner")}`}
+        className="flex justify-end"
+      >
         <StyledButton text="More Info" />
       </Link>
     ),
