@@ -68,6 +68,23 @@ export const columns: ColumnDef<IRecipeDisplay>[] = [
   {
     accessorKey: "product_owner",
     header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Company Owner" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span className={`max-w-[150px] truncate font-medium`}>
+            {row.original.product_owner
+              ? row.original.product_owner.companyId
+              : "NA"}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "product_owner",
+    header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Request" />
     ),
     cell: ({ row }) => {
@@ -97,54 +114,58 @@ export const columns: ColumnDef<IRecipeDisplay>[] = [
       };
       return (
         <div className="flex space-x-2">
-          {openSendRequest ? (
-            <>
-              <Input
-                id="quantity"
-                value={quantity}
-                onChange={(e) => setQuantity(parseInt(e.target.value))}
-                type="number"
-                className="bg-zinc-950 text-white w-10"
-              />
-              <Popover open={openPopover} onOpenChange={setOpenPopover}>
-                <PopoverTrigger>
-                  <StyledButton
-                    type="button"
-                    className="bg-zinc-950 border border-white rounded-md w-fit text-center"
-                  >
-                    Send
-                  </StyledButton>
-                </PopoverTrigger>
-                <PopoverContent className="w-fit bg-zinc-950 text-white">
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="col-span-2">Are you sure?</div>
-                    <StyledButton
-                      disabled={quantity === 0 || isNaN(quantity)}
-                      type="button"
-                      onClick={handleClick}
-                    >
-                      Yes
-                    </StyledButton>
+          {row.original.product_owner ? (
+            openSendRequest ? (
+              <>
+                <Input
+                  id="quantity"
+                  value={quantity}
+                  onChange={(e) => setQuantity(parseInt(e.target.value))}
+                  type="number"
+                  className="bg-zinc-950 text-white w-14"
+                />
+                <Popover open={openPopover} onOpenChange={setOpenPopover}>
+                  <PopoverTrigger>
                     <StyledButton
                       type="button"
-                      onClick={() => setOpenPopover(false)}
+                      className="bg-zinc-950 border border-white rounded-md w-fit text-center"
                     >
-                      No
+                      Send
                     </StyledButton>
-                  </div>
-                </PopoverContent>
-              </Popover>
-              <StyledButton
-                type="button"
-                onClick={() => setOpenSendRequest(false)}
-              >
-                Close
+                  </PopoverTrigger>
+                  <PopoverContent className="w-fit bg-zinc-950 text-white">
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="col-span-2">Are you sure?</div>
+                      <StyledButton
+                        disabled={quantity === 0 || isNaN(quantity)}
+                        type="button"
+                        onClick={handleClick}
+                      >
+                        Yes
+                      </StyledButton>
+                      <StyledButton
+                        type="button"
+                        onClick={() => setOpenPopover(false)}
+                      >
+                        No
+                      </StyledButton>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+                <StyledButton
+                  type="button"
+                  onClick={() => setOpenSendRequest(false)}
+                >
+                  Close
+                </StyledButton>
+              </>
+            ) : (
+              <StyledButton onClick={() => setOpenSendRequest(true)}>
+                Send Request
               </StyledButton>
-            </>
+            )
           ) : (
-            <StyledButton onClick={() => setOpenSendRequest(true)}>
-              Send Request
-            </StyledButton>
+            <div className="max-w-[200px]">No partner owns this product.</div>
           )}
         </div>
       );
