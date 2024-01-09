@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { IRecipeDisplay } from "@/types/product/IProduct";
+import { IRecipeDisplay, IRecipeSupplyDisplay } from "@/types/product/IProduct";
 import { DataTableColumnHeader } from "@/components/DataTable/DataTableColumnHeader";
 import { useState } from "react";
 import StyledButton from "@/components/ui/StyledButton";
@@ -15,7 +15,7 @@ import { useLoading } from "@/hooks/useLoading";
 import { AxiosError } from "axios";
 import { useRequest } from "@/hooks/useRequest";
 
-export const columns: ColumnDef<IRecipeDisplay>[] = [
+export const recipeColumns: ColumnDef<IRecipeDisplay>[] = [
   {
     accessorKey: "product",
     header: ({ column }) => (
@@ -64,6 +64,22 @@ export const columns: ColumnDef<IRecipeDisplay>[] = [
         </div>
       );
     },
+  },
+];
+
+export const supplyColumns: ColumnDef<IRecipeSupplyDisplay>[] = [
+  {
+    accessorKey: "product",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Product" />
+    ),
+    cell: ({ row }) => (
+      <div className="w-[80px]">
+        {row.original.product.productName} - {row.original.product.productId}
+      </div>
+    ),
+    enableSorting: true,
+    enableHiding: true,
   },
   {
     accessorKey: "product_owner",

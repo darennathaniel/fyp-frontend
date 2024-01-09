@@ -62,7 +62,7 @@ export function useProduct() {
     const response = await axiosPrivate.get("product/recipe", {
       params: { product_id: productId },
     });
-    return response.data.data[0];
+    return response.data.data;
   };
   const getProduct = async (productId: string | number) => {
     const response = await axiosPrivate.get("/product", {

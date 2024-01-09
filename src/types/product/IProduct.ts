@@ -12,10 +12,16 @@ export interface IRecipe {
   quantity?: number;
 }
 
-export interface IRecipeDisplay {
+export interface IRecipeBase {
   product: IProduct;
   inventory_quantity: number;
   recipe_quantity: number;
+}
+export interface IRecipeDisplay extends IRecipeBase {
+  product_owner: ICompanyProduct[];
+}
+
+export interface IRecipeSupplyDisplay extends IRecipeBase {
   product_owner: ICompanyProduct;
 }
 
