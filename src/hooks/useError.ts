@@ -5,6 +5,15 @@ import { IStatus } from "@/types/user/IStatus";
 
 export function useError() {
   const dispatch = useAppDispatch();
+  const showCustomError = (error: string) => {
+    dispatch(
+      setError({
+        statusCode: 400,
+        message: error,
+        show: true,
+      })
+    );
+  };
   const showError = (error: AxiosError<IStatus>) => {
     dispatch(
       setError({
@@ -23,5 +32,5 @@ export function useError() {
       })
     );
   };
-  return { showError, closeError };
+  return { showError, closeError, showCustomError };
 }

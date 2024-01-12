@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
   SelectContent,
@@ -41,24 +42,49 @@ export default function AddProductWithRecipeDialog({
     { productId: undefined, productName: undefined, quantity: undefined },
   ]);
   const [products, setProducts] = useState<IProduct[]>([]);
-  const { getAllProducts, addProductWithRecipe } = useProduct();
-  const { showError } = useError();
+  const [radio, setRadio] = useState<string>("new");
+  const [selectedProduct, setSelectedProduct] = useState<string>();
+  const { getAllProducts, addProductWithRecipe, addProductOwnerWithRecipe } =
+    useProduct();
+  const { showError, showCustomError } = useError();
   const { showLoading, closeLoading } = useLoading();
   const { showSuccess } = useSuccess();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     showLoading();
     try {
-      const { productName } = e.target as typeof e.target & IAddProductForm;
-      const response = await addProductWithRecipe(productName.value, recipes);
-      showSuccess(response);
-      if (data && setData) setData([...data, response.data.data[0]]);
-      if (allData && setAllData)
-        setAllData([...allData, response.data.data[0]]);
-      setOpen(false);
+      if (
+        recipes.filter(
+          (recipe) =>
+            selectedProduct === `${recipe.productId}-${recipe.productName}`
+        ).length > 0
+      )
+        throw Error("Recipe should not be the same as Product!");
+      if (selectedProduct !== undefined) {
+        const response = await addProductOwnerWithRecipe(
+          selectedProduct ?? "",
+          recipes
+        );
+        showSuccess(response);
+        if (data && setData) setData([...data, response.data.data[0]]);
+        if (allData && setAllData)
+          setAllData([...allData, response.data.data[0]]);
+        setOpen(false);
+      } else {
+        const { productName } = e.target as typeof e.target & IAddProductForm;
+        console.log(productName);
+        const response = await addProductWithRecipe(productName.value, recipes);
+        showSuccess(response);
+        if (data && setData) setData([...data, response.data.data[0]]);
+        if (allData && setAllData)
+          setAllData([...allData, response.data.data[0]]);
+        setOpen(false);
+      }
     } catch (err) {
       if (err instanceof AxiosError) {
         showError(err);
+      } else if (err instanceof Error) {
+        showCustomError(err.message);
       }
     } finally {
       closeLoading();
@@ -78,23 +104,66 @@ export default function AddProductWithRecipeDialog({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-zinc-950 text-white">
         <DialogHeader>
-          <DialogTitle>Convert to Supply</DialogTitle>
+          <DialogTitle>Add Product With Recipe</DialogTitle>
           <DialogDescription>
-            Add supply to your current product by pressing Supply.
+            Choose the products that suits the recipes you need and click add!
           </DialogDescription>
         </DialogHeader>
         <Separator className="bg-white" />
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="productName">Product Name</Label>
-              <Input
-                required
-                id="productName"
-                type="text"
-                className="bg-zinc-950 text-white"
-              />
-            </div>
+            <RadioGroup onValueChange={setRadio} value={radio}>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="new" id="r1" />
+                <Label htmlFor="r1">New Product</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="exist" id="r2" />
+                <Label htmlFor="r2">Existing Product</Label>
+              </div>
+            </RadioGroup>
+            {radio === "new" ? (
+              <div className="grid gap-2">
+                <Label htmlFor="productName">Product Name</Label>
+                <Input
+                  required
+                  id="productName"
+                  type="text"
+                  className="bg-zinc-950 text-white"
+                />
+              </div>
+            ) : (
+              <div className="grid gap-2">
+                <Label htmlFor="productName">Product</Label>
+                <Select
+                  value={selectedProduct}
+                  onValueChange={setSelectedProduct}
+                  required
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select a product" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-zinc-950 text-white">
+                    <SelectGroup>
+                      {products.length > 0 ? (
+                        products.map((product) => (
+                          <SelectItem
+                            value={`${product.productId.toString()}-${
+                              product.productName
+                            }`}
+                            className="hover:bg-zinc-700 transition"
+                          >
+                            {product.productId} - {product.productName}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <SelectLabel>No available products.</SelectLabel>
+                      )}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
             <div className="grid gap-2">
               <Label htmlFor="quantity">Recipes</Label>
               {recipes.map((recipe, idx) => (
@@ -172,7 +241,7 @@ export default function AddProductWithRecipeDialog({
                     onClick={() => {
                       const newRecipes = recipes;
                       newRecipes.splice(idx, 1);
-                      setRecipes([...newRecipes]);
+                      if (newRecipes.length > 0) setRecipes([...newRecipes]);
                     }}
                     type="button"
                   >

@@ -48,7 +48,7 @@ export default function AddProductWithoutRecipeDialog({
     showLoading();
     getAllCompany()
       .then((response) => {
-        setCompanies(response.companies);
+        setCompanies(response[0]);
       })
       .catch((err) => {
         if (err instanceof AxiosError) showError(err);

@@ -1,4 +1,4 @@
-import { IRecipe } from "@/types/product/IProduct";
+import { IProduct, IRecipe } from "@/types/product/IProduct";
 import { axiosPrivate } from "@/utils/axios";
 
 export function useProduct() {
@@ -48,6 +48,36 @@ export function useProduct() {
     });
     return response;
   };
+  const addProductOwnerWithRecipe = async (
+    product: string,
+    recipes: IRecipe[]
+  ) => {
+    const splitProduct = product.split("-");
+    const prerequisiteSupplies = recipes.map((recipe) => {
+      return {
+        product_id: recipe.productId,
+        product_name: recipe.productName,
+      };
+    });
+    const quantityPrerequisiteSupplies = recipes.map(
+      (recipe) => recipe.quantity
+    );
+    const response = await axiosPrivate.post(
+      "product/",
+      {
+        product_id: splitProduct[0],
+        product_name: splitProduct[1],
+        prerequisite_supplies: prerequisiteSupplies,
+        quantity_prerequisite_supplies: quantityPrerequisiteSupplies,
+      },
+      {
+        params: {
+          existing: true,
+        },
+      }
+    );
+    return response;
+  };
   const addProductWithoutRecipe = async (
     productName: string,
     owner: string
@@ -77,6 +107,7 @@ export function useProduct() {
     getAllProducts,
     addProductWithRecipe,
     addProductWithoutRecipe,
+    addProductOwnerWithRecipe,
     getRecipe,
     getProduct,
   };
