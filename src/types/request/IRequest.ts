@@ -9,6 +9,17 @@ export interface IRequest {
   quantity: Number;
 }
 
+export interface IProductRequest {
+  _id: string;
+  productId: number;
+  productName: string;
+  company: string;
+  existing: boolean;
+  created_at: Date;
+  updated_at: Date;
+  progress: string;
+}
+
 export enum REQUEST_STATE {
   APPROVED,
   REJECTED,
@@ -27,4 +38,9 @@ export interface IRequestHistory extends IRequest {
 export interface IRequestTableMeta {
   data: IRequestTable[];
   setData: React.Dispatch<React.SetStateAction<IRequestTable[]>>;
+}
+
+export interface IProductRequestTableMeta {
+  data: IProductRequest[];
+  setData: React.Dispatch<React.SetStateAction<IProductRequest[]>>;
 }

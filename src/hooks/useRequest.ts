@@ -100,6 +100,34 @@ export function useRequest() {
     });
     return response;
   };
+  const getProductRequest = async () => {
+    const response = await axiosPrivate.get("product/no_recipe", {
+      params: {
+        timeline: "current",
+      },
+    });
+    return response.data.data[0];
+  };
+  const getHistoryProductRequest = async () => {
+    const response = await axiosPrivate.get("product/no_recipe", {
+      params: {
+        timeline: "past",
+      },
+    });
+    return response.data.data[0];
+  };
+  const approveProductRequest = async (productRequestId: string) => {
+    const response = await axiosPrivate.post("product/no_recipe/approve", {
+      product_request_id: productRequestId,
+    });
+    return response;
+  };
+  const declineProductRequest = async (productRequestId: string) => {
+    const response = await axiosPrivate.post("product/no_recipe/decline", {
+      product_request_id: productRequestId,
+    });
+    return response;
+  };
   return {
     getIncomingRequest,
     getOutgoingRequest,
@@ -107,5 +135,9 @@ export function useRequest() {
     approveRequest,
     declineRequest,
     sendRequest,
+    getProductRequest,
+    getHistoryProductRequest,
+    approveProductRequest,
+    declineProductRequest,
   };
 }
