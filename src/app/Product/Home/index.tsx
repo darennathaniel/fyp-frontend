@@ -70,7 +70,7 @@ export default function ProductHome() {
       defaultValue="my_product"
     >
       <div className="w-3/4 flex items-center justify-between">
-        {user.isAuthenticated && user.isOwner ? (
+        {user.isAuthenticated ? (
           <AddProductWithoutRecipeDialog
             allData={allProducts}
             setAllData={setAllProducts}

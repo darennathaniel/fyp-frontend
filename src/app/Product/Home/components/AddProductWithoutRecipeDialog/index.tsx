@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
   SelectTrigger,
@@ -20,14 +21,12 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import StyledButton from "@/components/ui/StyledButton";
-import { useCompany } from "@/hooks/useCompany";
 import { useError } from "@/hooks/useError";
 import { useLoading } from "@/hooks/useLoading";
 import { useProduct } from "@/hooks/useProduct";
 import { useSuccess } from "@/hooks/useSuccess";
-import { ICompany } from "@/types/company/ICompany";
 import { IProductDialog } from "@/types/dialog/IDialog";
-import { IAddProductForm } from "@/types/product/IProduct";
+import { IAddProductForm, IProduct } from "@/types/product/IProduct";
 import { AxiosError } from "axios";
 import { FormEvent, useEffect, useState } from "react";
 
@@ -40,16 +39,18 @@ export default function AddProductWithoutRecipeDialog({
   const { showLoading, closeLoading } = useLoading();
   const { showError } = useError();
   const { showSuccess } = useSuccess();
-  const { getAllCompany } = useCompany();
-  const { addProductWithoutRecipe } = useProduct();
-  const [companies, setCompanies] = useState<ICompany[]>([]);
-  const [selectedCompany, setSelectedCompany] = useState<string>("");
+  const {
+    addProductOwnerWithoutRecipe,
+    addProductWithoutRecipe,
+    getAllProductsNoRecipe,
+  } = useProduct();
+  const [products, setProducts] = useState<IProduct[]>([]);
+  const [radio, setRadio] = useState<string>("new");
+  const [selectedProduct, setSelectedProduct] = useState<string>();
   useEffect(() => {
     showLoading();
-    getAllCompany()
-      .then((response) => {
-        setCompanies(response[0]);
-      })
+    getAllProductsNoRecipe()
+      .then((response) => setProducts(response))
       .catch((err) => {
         if (err instanceof AxiosError) showError(err);
       })
@@ -59,15 +60,23 @@ export default function AddProductWithoutRecipeDialog({
     e.preventDefault();
     showLoading();
     try {
-      const { productName } = e.target as typeof e.target & IAddProductForm;
-      const response = await addProductWithoutRecipe(
-        productName.value,
-        selectedCompany
-      );
-      showSuccess(response);
-      if (allData && setAllData)
-        setAllData([...allData, response.data.data[0]]);
-      setOpen(false);
+      if (selectedProduct !== undefined && radio === "exist") {
+        const response = await addProductOwnerWithoutRecipe(
+          selectedProduct ?? ""
+        );
+        showSuccess(response);
+        if (allData && setAllData)
+          setAllData([...allData, response.data.data[0]]);
+        setOpen(false);
+      } else {
+        const { productName } = e.target as typeof e.target & IAddProductForm;
+        console.log(productName.value);
+        const response = await addProductWithoutRecipe(productName.value);
+        showSuccess(response);
+        if (allData && setAllData)
+          setAllData([...allData, response.data.data[0]]);
+        setOpen(false);
+      }
     } catch (err) {
       if (err instanceof AxiosError) showError(err);
     } finally {
@@ -87,47 +96,62 @@ export default function AddProductWithoutRecipeDialog({
         <Separator className="bg-white" />
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="productName">Product Name</Label>
-              <Input
-                required
-                id="productName"
-                type="text"
-                className="bg-zinc-950 text-white"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="company">Company</Label>
-              <Select
-                required
-                value={selectedCompany}
-                onValueChange={setSelectedCompany}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a company" />
-                </SelectTrigger>
-                <SelectContent className="bg-zinc-950 text-white">
-                  <SelectGroup>
-                    {companies.length > 0 ? (
-                      companies.map((company) => (
-                        <SelectItem
-                          value={company.owner}
-                          className="hover:bg-zinc-700 transition overflow-hidden text-ellipsis"
-                        >
-                          {company.name}
-                        </SelectItem>
-                      ))
-                    ) : (
-                      <SelectLabel>No companies.</SelectLabel>
-                    )}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
+            <RadioGroup onValueChange={setRadio} value={radio}>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="new" id="r1" />
+                <Label htmlFor="r1">New Product</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="exist" id="r2" />
+                <Label htmlFor="r2">Existing Product</Label>
+              </div>
+            </RadioGroup>
+            {radio === "new" ? (
+              <div className="grid gap-2">
+                <Label htmlFor="productName">Product Name</Label>
+                <Input
+                  required
+                  id="productName"
+                  type="text"
+                  className="bg-zinc-950 text-white"
+                />
+              </div>
+            ) : (
+              <div className="grid gap-2">
+                <Label htmlFor="productName">Product</Label>
+                <Select
+                  value={selectedProduct}
+                  onValueChange={setSelectedProduct}
+                  required
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select a product" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-zinc-950 text-white">
+                    <SelectGroup>
+                      {products.length > 0 ? (
+                        products.map((product) => (
+                          <SelectItem
+                            value={`${product.productId.toString()}-${
+                              product.productName
+                            }`}
+                            className="hover:bg-zinc-700 transition"
+                          >
+                            {product.productId} - {product.productName}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <SelectLabel>No available products.</SelectLabel>
+                      )}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
           </div>
           <Separator className="bg-white my-4" />
           <DialogFooter>
-            <StyledButton text="Add" type="submit" />
+            <StyledButton text="Request" type="submit" />
           </DialogFooter>
         </form>
       </DialogContent>

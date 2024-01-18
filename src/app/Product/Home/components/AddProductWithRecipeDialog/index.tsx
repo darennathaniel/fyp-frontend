@@ -44,8 +44,11 @@ export default function AddProductWithRecipeDialog({
   const [products, setProducts] = useState<IProduct[]>([]);
   const [radio, setRadio] = useState<string>("new");
   const [selectedProduct, setSelectedProduct] = useState<string>();
-  const { getAllProducts, addProductWithRecipe, addProductOwnerWithRecipe } =
-    useProduct();
+  const {
+    getAllProductsHaveRecipe,
+    addProductWithRecipe,
+    addProductOwnerWithRecipe,
+  } = useProduct();
   const { showError, showCustomError } = useError();
   const { showLoading, closeLoading } = useLoading();
   const { showSuccess } = useSuccess();
@@ -72,7 +75,6 @@ export default function AddProductWithRecipeDialog({
         setOpen(false);
       } else {
         const { productName } = e.target as typeof e.target & IAddProductForm;
-        console.log(productName);
         const response = await addProductWithRecipe(productName.value, recipes);
         showSuccess(response);
         if (data && setData) setData([...data, response.data.data[0]]);
@@ -92,7 +94,7 @@ export default function AddProductWithRecipeDialog({
   };
   useEffect(() => {
     showLoading();
-    getAllProducts()
+    getAllProductsHaveRecipe()
       .then((response) => setProducts(response))
       .catch((err) => {
         if (err instanceof AxiosError) showError(err);

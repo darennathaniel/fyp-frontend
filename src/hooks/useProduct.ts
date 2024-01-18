@@ -28,6 +28,22 @@ export function useProduct() {
     const response = await axiosPrivate.get("product");
     return response.data.data[0];
   };
+  const getAllProductsHaveRecipe = async () => {
+    const response = await axiosPrivate.get("product", {
+      params: {
+        has_recipe: true,
+      },
+    });
+    return response.data.data[0];
+  };
+  const getAllProductsNoRecipe = async () => {
+    const response = await axiosPrivate.get("product", {
+      params: {
+        has_recipe: false,
+      },
+    });
+    return response.data.data[0];
+  };
   const addProductWithRecipe = async (
     productName: string,
     recipes: IRecipe[]
@@ -46,6 +62,22 @@ export function useProduct() {
       prerequisite_supplies: prerequisiteSupplies,
       quantity_prerequisite_supplies: quantityPrerequisiteSupplies,
     });
+    return response;
+  };
+  const addProductOwnerWithoutRecipe = async (product: string) => {
+    const splitProduct = product.split("-");
+    const response = await axiosPrivate.post(
+      "product/no_recipe",
+      {
+        product_id: splitProduct[0],
+        product_name: splitProduct[1],
+      },
+      {
+        params: {
+          existing: true,
+        },
+      }
+    );
     return response;
   };
   const addProductOwnerWithRecipe = async (
@@ -78,13 +110,9 @@ export function useProduct() {
     );
     return response;
   };
-  const addProductWithoutRecipe = async (
-    productName: string,
-    owner: string
-  ) => {
+  const addProductWithoutRecipe = async (productName: string) => {
     const response = await axiosPrivate.post("product/no_recipe", {
       product_name: productName,
-      owner,
     });
     return response;
   };
@@ -108,7 +136,10 @@ export function useProduct() {
     addProductWithRecipe,
     addProductWithoutRecipe,
     addProductOwnerWithRecipe,
+    addProductOwnerWithoutRecipe,
     getRecipe,
     getProduct,
+    getAllProductsHaveRecipe,
+    getAllProductsNoRecipe,
   };
 }
