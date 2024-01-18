@@ -70,7 +70,6 @@ export default function AddProductWithoutRecipeDialog({
         setOpen(false);
       } else {
         const { productName } = e.target as typeof e.target & IAddProductForm;
-        console.log(productName.value);
         const response = await addProductWithoutRecipe(productName.value);
         showSuccess(response);
         if (allData && setAllData)
@@ -90,7 +89,7 @@ export default function AddProductWithoutRecipeDialog({
         <DialogHeader>
           <DialogTitle>Add Product Without Recipe</DialogTitle>
           <DialogDescription>
-            Add product without recipe to a designated company by clicking Add.
+            Create a new product that is not dependant towards another product!
           </DialogDescription>
         </DialogHeader>
         <Separator className="bg-white" />
@@ -148,6 +147,9 @@ export default function AddProductWithoutRecipeDialog({
                 </Select>
               </div>
             )}
+            <div className="text-xs text-red-400">
+              NOTE: Approval from network owner is needed!
+            </div>
           </div>
           <Separator className="bg-white my-4" />
           <DialogFooter>
