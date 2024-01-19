@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import StyledButton from "@/components/ui/StyledButton";
+import { useAppSelector } from "@/hooks/useAppSelector";
 import { useError } from "@/hooks/useError";
 import { useLoading } from "@/hooks/useLoading";
 import { useProduct } from "@/hooks/useProduct";
@@ -52,6 +53,7 @@ export default function AddProductWithRecipeDialog({
   const { showError, showCustomError } = useError();
   const { showLoading, closeLoading } = useLoading();
   const { showSuccess } = useSuccess();
+  const user = useAppSelector((state) => state.app.user);
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     showLoading();
@@ -94,7 +96,7 @@ export default function AddProductWithRecipeDialog({
   };
   useEffect(() => {
     showLoading();
-    getAllProductsHaveRecipe()
+    getAllProductsHaveRecipe(user.wallet_address)
       .then((response) => setProducts(response))
       .catch((err) => {
         if (err instanceof AxiosError) showError(err);

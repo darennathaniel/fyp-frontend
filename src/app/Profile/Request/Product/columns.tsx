@@ -273,7 +273,7 @@ export const historyColumns: ColumnDef<IProductRequest>[] = [
       return (
         <div className="flex space-x-2">
           <span className="max-w-[200px] truncate font-medium">
-            {row.getValue("state") === "declined" ? (
+            {row.original.progress === "declined" ? (
               <Badge className="bg-red-900">
                 {row.original.progress.toUpperCase()}
               </Badge>

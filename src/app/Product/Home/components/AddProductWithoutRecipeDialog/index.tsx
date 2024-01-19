@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import StyledButton from "@/components/ui/StyledButton";
+import { useAppSelector } from "@/hooks/useAppSelector";
 import { useError } from "@/hooks/useError";
 import { useLoading } from "@/hooks/useLoading";
 import { useProduct } from "@/hooks/useProduct";
@@ -47,9 +48,10 @@ export default function AddProductWithoutRecipeDialog({
   const [products, setProducts] = useState<IProduct[]>([]);
   const [radio, setRadio] = useState<string>("new");
   const [selectedProduct, setSelectedProduct] = useState<string>();
+  const user = useAppSelector((state) => state.app.user);
   useEffect(() => {
     showLoading();
-    getAllProductsNoRecipe()
+    getAllProductsNoRecipe(user.wallet_address)
       .then((response) => setProducts(response))
       .catch((err) => {
         if (err instanceof AxiosError) showError(err);

@@ -28,18 +28,22 @@ export function useProduct() {
     const response = await axiosPrivate.get("product");
     return response.data.data[0];
   };
-  const getAllProductsHaveRecipe = async () => {
+  const getAllProductsHaveRecipe = async (company_address?: string) => {
     const response = await axiosPrivate.get("product", {
       params: {
         has_recipe: true,
+        company_address,
+        filter: company_address !== undefined ? true : false,
       },
     });
     return response.data.data[0];
   };
-  const getAllProductsNoRecipe = async () => {
+  const getAllProductsNoRecipe = async (company_address?: string) => {
     const response = await axiosPrivate.get("product", {
       params: {
         has_recipe: false,
+        company_address,
+        filter: company_address !== undefined ? true : false,
       },
     });
     return response.data.data[0];
