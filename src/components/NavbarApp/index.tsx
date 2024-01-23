@@ -43,7 +43,7 @@ export default function NavbarApp() {
       <div className="border-b flex justify-between h-16">
         <MobileNavbarApp />
         <NavigationMenu className="items-center hidden md:flex">
-          <NavigationMenuList className="gap-1">
+          <NavigationMenuList className="space-x-3 px-4">
             <NavigationMenuItem>
               <Link to="/">
                 <NavigationMenuLink
@@ -165,7 +165,7 @@ export default function NavbarApp() {
                 variant="outline"
                 className="hover:bg-gray-100 active:bg-gray-300 hover:text-zinc-950"
               >
-                Log in
+                Login
               </Button>
             </Link>
           )}

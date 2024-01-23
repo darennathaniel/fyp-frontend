@@ -12,5 +12,9 @@ export function useUser() {
       login({ ...user, isAuthenticated: true, isOwner: user.is_owner } as IUser)
     );
   };
-  return { getUser };
+  const getLandingUser = async () => {
+    const response = await axiosPrivate.get("user/landing");
+    return response.data.data[0];
+  };
+  return { getUser, getLandingUser };
 }

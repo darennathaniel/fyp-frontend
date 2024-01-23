@@ -10,3 +10,8 @@ export interface IUser {
   prerequisite: number;
   isOwner: boolean;
 }
+
+export interface ILandingUser {
+  incomingContract: number;
+  incomingRequests: number;
+}

@@ -58,6 +58,9 @@ export default function Register() {
           <CardDescription>
             Enter your assigned username, assigned wallet address, and your
             choice of password to create your account
+            <div className="text-xs text-red-400">
+              NOTE: Your company must be created by network owner first!
+            </div>
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
