@@ -1,4 +1,4 @@
-import { IProduct, IRecipe } from "@/types/product/IProduct";
+import { IRecipe } from "@/types/product/IProduct";
 import { axiosPrivate } from "@/utils/axios";
 
 export function useProduct() {
@@ -22,6 +22,10 @@ export function useProduct() {
   };
   const getMyProduct = async () => {
     const response = await axiosPrivate.get("product/my");
+    return response.data.data[0];
+  };
+  const getMyPrerequisiteProduct = async () => {
+    const response = await axiosPrivate.get("product/prerequisite/my");
     return response.data.data[0];
   };
   const getAllProducts = async () => {
@@ -136,6 +140,7 @@ export function useProduct() {
     getProductByCompany,
     getPrerequisiteByCompany,
     getMyProduct,
+    getMyPrerequisiteProduct,
     getAllProducts,
     addProductWithRecipe,
     addProductWithoutRecipe,

@@ -11,6 +11,12 @@ export interface ISendContractDialog extends IDialog {
   products: (IProduct & ISupply)[];
 }
 
+export interface ISendSupplyRequestDialog extends IDialog {
+  product: IProduct;
+  owner: string;
+  company_name: string;
+}
+
 export interface IConvertToSupplyDialog extends IProductDialog {
   product: IProduct & ISupply;
 }
