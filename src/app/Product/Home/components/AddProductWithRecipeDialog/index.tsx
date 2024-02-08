@@ -43,12 +43,14 @@ export default function AddProductWithRecipeDialog({
     { productId: undefined, productName: undefined, quantity: undefined },
   ]);
   const [products, setProducts] = useState<IProduct[]>([]);
+  const [recipeProducts, setRecipeProducts] = useState<IProduct[]>([]);
   const [radio, setRadio] = useState<string>("new");
   const [selectedProduct, setSelectedProduct] = useState<string>();
   const {
     getAllProductsHaveRecipe,
     addProductWithRecipe,
     addProductOwnerWithRecipe,
+    getAllProducts,
   } = useProduct();
   const { showError, showCustomError } = useError();
   const { showLoading, closeLoading } = useLoading();
@@ -97,7 +99,15 @@ export default function AddProductWithRecipeDialog({
   useEffect(() => {
     showLoading();
     getAllProductsHaveRecipe(user.wallet_address)
-      .then((response) => setProducts(response))
+      .then((response) => {
+        setProducts(response);
+      })
+      .catch((err) => {
+        if (err instanceof AxiosError) showError(err);
+      })
+      .finally(() => closeLoading());
+    getAllProducts()
+      .then((response) => setRecipeProducts(response))
       .catch((err) => {
         if (err instanceof AxiosError) showError(err);
       })
@@ -202,8 +212,8 @@ export default function AddProductWithRecipeDialog({
                     </SelectTrigger>
                     <SelectContent className="bg-zinc-950 text-white">
                       <SelectGroup>
-                        {products.length > 0 ? (
-                          products.map((product) => (
+                        {recipeProducts.length > 0 ? (
+                          recipeProducts.map((product) => (
                             <SelectItem
                               value={`${product.productId.toString()}-${
                                 product.productName

@@ -28,3 +28,7 @@ export interface IRecipeSupplyDisplay extends IRecipeBase {
 export interface IAddProductForm {
   productName: { value: string };
 }
+
+export interface ISendSupplyRequestForm {
+  quantity: { value: number };
+}

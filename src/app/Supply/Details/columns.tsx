@@ -65,17 +65,10 @@ export const columns: ColumnDef<ISupplyMongo>[] = [
   {
     id: "action",
     header: ({ column }) => (
-      <DataTableColumnHeader
-        className="flex justify-center"
-        column={column}
-        title="Action"
-      />
+      <DataTableColumnHeader className="flex" column={column} title="Action" />
     ),
     cell: ({ row }) => (
-      <Link
-        to={`/supply/${row.getValue("supplyId")}`}
-        className="flex justify-end"
-      >
+      <Link to={`/supply/${row.getValue("supplyId")}`} className="flex w-fit">
         <StyledButton text="More Info" />
       </Link>
     ),

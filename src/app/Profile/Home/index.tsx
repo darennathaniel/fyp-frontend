@@ -2,30 +2,16 @@ import ProfileHeader from "../components/ProfileHeader";
 import { Separator } from "@/components/ui/separator";
 import { useEffect } from "react";
 import { useUser } from "@/hooks/useUser";
-import { useError } from "@/hooks/useError";
 import { useLoading } from "@/hooks/useLoading";
-import { AxiosError } from "axios";
-import { useNavigate } from "react-router";
 import { useAppSelector } from "@/hooks/useAppSelector";
 
 export default function ProfileHome() {
-  const navigate = useNavigate();
   const { getUser } = useUser();
-  const { showError } = useError();
   const { showLoading, closeLoading } = useLoading();
   const user = useAppSelector((state) => state.app.user);
   useEffect(() => {
-    if (!user.isAuthenticated) {
-      showLoading();
-      getUser()
-        .catch((err) => {
-          if (err instanceof AxiosError) {
-            showError(err);
-            navigate("/");
-          }
-        })
-        .finally(() => closeLoading());
-    }
+    showLoading();
+    getUser().finally(() => closeLoading());
   }, []);
   return (
     <div className="space-y-6">

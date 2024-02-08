@@ -34,15 +34,11 @@ export const columns: ColumnDef<IProduct>[] = [
   {
     id: "action",
     header: ({ column }) => (
-      <DataTableColumnHeader
-        className="flex justify-center"
-        column={column}
-        title="Action"
-      />
+      <DataTableColumnHeader className="flex" column={column} title="Action" />
     ),
     cell: ({ row }) => (
-      <Link to={`${row.getValue("productId")}`} className="flex justify-end">
-        <StyledButton text="More Info" />
+      <Link to={`${row.getValue("productId")}`} className="flex w-fit">
+        <StyledButton text="More Info"></StyledButton>
       </Link>
     ),
   },

@@ -1,10 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { useAppSelector } from "@/hooks/useAppSelector";
-import { useError } from "@/hooks/useError";
 import { useLoading } from "@/hooks/useLoading";
 import { useUser } from "@/hooks/useUser";
 import { ILandingUser } from "@/types/user/IUser";
-import { AxiosError } from "axios";
 import { ArrowRightCircleIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -17,15 +15,11 @@ export default function LoggedIn() {
     incomingRequests: 0,
   });
   const { showLoading, closeLoading } = useLoading();
-  const { showError } = useError();
   useEffect(() => {
     showLoading();
     getLandingUser()
       .then((response) => {
         setData(response);
-      })
-      .catch((err) => {
-        if (err instanceof AxiosError) showError(err);
       })
       .finally(() => closeLoading());
   }, []);
