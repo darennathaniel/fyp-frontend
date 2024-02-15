@@ -43,8 +43,8 @@ export default function ProfileRequestProduct() {
   return (
     <div className="space-y-6">
       <ProfileHeader
-        title="Supply Request"
-        subtitle="View, approve, or decline Supply Request from company partners"
+        title="Product Request"
+        subtitle="View, approve, or decline Product Request from companies."
       />
       <Tabs
         className="w-full items-center flex flex-col space-y-6"
