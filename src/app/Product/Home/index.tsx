@@ -235,30 +235,15 @@ export default function ProductHome() {
                   </div>
                 </CardContent>
                 <CardFooter className="grid gap-2 grid-cols-2">
-                  {product.has_recipe ? (
-                    <>
-                      <RecipesDialog product={product}>
-                        <StyledButton>Recipe List</StyledButton>
-                      </RecipesDialog>
-                      <ConvertPrerequisiteToSupplyDialog
-                        product={product}
-                        data={products}
-                        setData={setProducts}
-                      >
-                        <StyledButton>Convert Prerequisite</StyledButton>
-                      </ConvertPrerequisiteToSupplyDialog>
-                    </>
-                  ) : (
-                    <SendSupplyRequestDialog
-                      product={product}
-                      owner={product.owner.split(" - ")[1]}
-                      company_name={product.owner.split(" - ")[0]}
-                    >
-                      <StyledButton className="col-span-2">
-                        Send Supply Request
-                      </StyledButton>
-                    </SendSupplyRequestDialog>
-                  )}
+                  <SendSupplyRequestDialog
+                    product={product}
+                    owner={product.owner.split(" - ")[1]}
+                    company_name={product.owner.split(" - ")[0]}
+                  >
+                    <StyledButton className="col-span-2">
+                      Send Supply Request
+                    </StyledButton>
+                  </SendSupplyRequestDialog>
                 </CardFooter>
               </Card>
             ))}

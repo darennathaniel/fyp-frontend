@@ -14,9 +14,7 @@ export default function ProfileRequestProduct() {
   const [data, setData] = useState<IProductRequest[]>([]);
   const [historyData, setHistoryData] = useState<IProductRequest[]>([]);
   const user = useAppSelector((state) => state.app.user);
-  const [tab, setTab] = useState<string>(
-    user.isOwner ? "incoming" : "outgoing"
-  );
+  const [tab, setTab] = useState<string>("first_tab");
   const { showLoading, closeLoading } = useLoading();
   const { showError } = useError();
   const { getProductRequest, getHistoryProductRequest } = useRequest();
@@ -54,14 +52,14 @@ export default function ProfileRequestProduct() {
         <TabsList className="md:w-1/2 w-3/5 bg-zinc-700">
           {user.isOwner ? (
             <TabsTrigger
-              value="incoming"
+              value="first_tab"
               className="rounded-lg text-gray-400 hover:text-white w-1/2 h-full data-[state=active]:bg-zinc-950 data-[state=active]:text-white data-[state=active]:shadow-sm"
             >
               Incoming
             </TabsTrigger>
           ) : (
             <TabsTrigger
-              value="outgoing"
+              value="first_tab"
               className="w-1/2 rounded-lg text-gray-400 hover:text-white h-full data-[state=active]:bg-zinc-950 data-[state=active]:text-white data-[state=active]:shadow-sm"
             >
               Outgoing
@@ -75,7 +73,7 @@ export default function ProfileRequestProduct() {
           </TabsTrigger>
         </TabsList>
         {user.isOwner ? (
-          <TabsContent value="incoming" className="w-full flex justify-center">
+          <TabsContent value="first_tab" className="w-full flex justify-center">
             <div className="w-full">
               <DataTable
                 data={data}
@@ -88,7 +86,7 @@ export default function ProfileRequestProduct() {
             </div>
           </TabsContent>
         ) : (
-          <TabsContent value="outgoing" className="w-full flex justify-center">
+          <TabsContent value="first_tab" className="w-full flex justify-center">
             <div className="w-full">
               <DataTable data={data} columns={outgoingColumns} />
             </div>

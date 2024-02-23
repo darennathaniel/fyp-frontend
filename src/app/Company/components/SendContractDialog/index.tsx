@@ -48,7 +48,6 @@ export default function SendContractDialog({
       const response = await sendContract(to.wallet_address, parseInt(product));
       showSuccess(response);
       setOpen(false);
-      location.reload();
     } catch (err) {
       if (err instanceof AxiosError) {
         showError(err);

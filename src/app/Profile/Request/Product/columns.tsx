@@ -99,6 +99,7 @@ export const incomingColumns: ColumnDef<IProductRequest>[] = [
                   );
                   setData(newData);
                   showSuccess(res);
+                  location.reload();
                 })
                 .catch((err) => showError(err))
                 .finally(() => closeLoading());
@@ -117,6 +118,7 @@ export const incomingColumns: ColumnDef<IProductRequest>[] = [
                   );
                   setData(newData);
                   showSuccess(res);
+                  location.reload();
                 })
                 .catch((err) => showError(err))
                 .finally(() => closeLoading());
