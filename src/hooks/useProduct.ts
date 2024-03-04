@@ -65,7 +65,7 @@ export function useProduct() {
     const quantityPrerequisiteSupplies = recipes.map(
       (recipe) => recipe.quantity
     );
-    const response = await axiosPrivate.post("product/", {
+    const response = await axiosPrivate.post("product", {
       product_name: productName,
       prerequisite_supplies: prerequisiteSupplies,
       quantity_prerequisite_supplies: quantityPrerequisiteSupplies,
@@ -131,10 +131,16 @@ export function useProduct() {
     return response.data.data;
   };
   const getProduct = async (productId: string | number) => {
-    const response = await axiosPrivate.get("/product", {
+    const response = await axiosPrivate.get("product", {
       params: { product_id: productId },
     });
     return response.data.data[0];
+  };
+  const deleteRequestProduct = async (productId: string | number) => {
+    const response = await axiosPrivate.post("product/delete_request", {
+      product_id: productId,
+    });
+    return response;
   };
   return {
     getProductByCompany,
@@ -150,5 +156,6 @@ export function useProduct() {
     getProduct,
     getAllProductsHaveRecipe,
     getAllProductsNoRecipe,
+    deleteRequestProduct,
   };
 }

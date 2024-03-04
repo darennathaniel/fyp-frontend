@@ -1,3 +1,4 @@
+import ConfirmationButton from "@/components/ConfirmationButton";
 import { DataTable } from "@/components/DataTable";
 import PageHeader from "@/components/PageHeader";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,7 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 import { useError } from "@/hooks/useError";
 import { useLoading } from "@/hooks/useLoading";
 import { useProduct } from "@/hooks/useProduct";
+import { setLoading } from "@/reducers/app";
 import { IProduct } from "@/types/product/IProduct";
 import { ISupply } from "@/types/supply/ISupply";
 import { AxiosError } from "axios";
@@ -30,9 +32,15 @@ import SendSupplyRequestDialog from "./components/SendSupplyRequestDialog";
 
 export default function ProductHome() {
   const user = useAppSelector((state) => state.app.user);
-  const { getMyProduct, getAllProducts, getMyPrerequisiteProduct } =
-    useProduct();
-  const [products, setProducts] = useState<(IProduct & ISupply)[]>([]);
+  const {
+    getMyProduct,
+    getAllProducts,
+    getMyPrerequisiteProduct,
+    deleteRequestProduct,
+  } = useProduct();
+  const [products, setProducts] = useState<
+    (IProduct & ISupply & { delete_request?: boolean })[]
+  >([]);
   const [prerequisiteProducts, setPrerequisiteProducts] = useState<
     (IProduct & ISupply & { owner: string })[]
   >([]);
@@ -141,7 +149,32 @@ export default function ProductHome() {
                 <CardHeader className="space-y-1">
                   <CardTitle className="text-2xl flex justify-between items-center">
                     <div>{product.productName}</div>
-                    <div>
+                    <div className="space-x-2">
+                      {!product.delete_request ? (
+                        <ConfirmationButton
+                          onConfirmClick={() => {
+                            showLoading();
+                            deleteRequestProduct(product.productId)
+                              .catch((err) => {
+                                if (err instanceof AxiosError) showError(err);
+                              })
+                              .finally(() => closeLoading());
+                            const newProducts = products.map((oldProduct) => {
+                              if (oldProduct.productId === product.productId)
+                                return { ...oldProduct, delete_request: true };
+                              return oldProduct;
+                            });
+                            setProducts(newProducts);
+                          }}
+                          onCancelClick={() => {}}
+                        >
+                          <StyledButton className="text-red-600 hover:text-red-600 border-red-600">
+                            Delete Request
+                          </StyledButton>
+                        </ConfirmationButton>
+                      ) : (
+                        <></>
+                      )}
                       <Link to={product.productId.toString()}>
                         <StyledButton>More info</StyledButton>
                       </Link>
@@ -164,29 +197,35 @@ export default function ProductHome() {
                   </div>
                 </CardContent>
                 <CardFooter className="grid gap-2 grid-cols-2">
-                  {product.has_recipe ? (
-                    <>
-                      <RecipesDialog product={product}>
-                        <StyledButton>Recipe List</StyledButton>
-                      </RecipesDialog>
-                      <ConvertPrerequisiteToSupplyDialog
+                  {!product.delete_request ? (
+                    product.has_recipe ? (
+                      <>
+                        <RecipesDialog product={product}>
+                          <StyledButton>Recipe List</StyledButton>
+                        </RecipesDialog>
+                        <ConvertPrerequisiteToSupplyDialog
+                          product={product}
+                          data={products}
+                          setData={setProducts}
+                        >
+                          <StyledButton>Convert Prerequisite</StyledButton>
+                        </ConvertPrerequisiteToSupplyDialog>
+                      </>
+                    ) : (
+                      <ConvertToSupplyDialog
                         product={product}
                         data={products}
                         setData={setProducts}
                       >
-                        <StyledButton>Convert Prerequisite</StyledButton>
-                      </ConvertPrerequisiteToSupplyDialog>
-                    </>
+                        <StyledButton className="col-span-2">
+                          Convert to Supply
+                        </StyledButton>
+                      </ConvertToSupplyDialog>
+                    )
                   ) : (
-                    <ConvertToSupplyDialog
-                      product={product}
-                      data={products}
-                      setData={setProducts}
-                    >
-                      <StyledButton className="col-span-2">
-                        Convert to Supply
-                      </StyledButton>
-                    </ConvertToSupplyDialog>
+                    <div className="text-zinc-400">
+                      Delete Request is on the way...
+                    </div>
                   )}
                 </CardFooter>
               </Card>
