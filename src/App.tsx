@@ -15,9 +15,9 @@ import Product from "./app/Product";
 export default function App() {
   return (
     <div className="bg-zinc-950 text-white min-h-screen">
-      <ErrorPopup />
-      <Loading />
       <BrowserRouter>
+        <ErrorPopup />
+        <Loading />
         <Routes>
           <Route path="/sso/*" element={<SSO />} />
           <Route element={<NavbarApp />}>
