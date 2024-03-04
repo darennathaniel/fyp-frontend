@@ -55,8 +55,23 @@ export const columns: ColumnDef<ISupplyMongo>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
+          <span className="max-w-[200px] truncate font-medium">
             {(row.getValue("quantity") as number).toString()}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "owner",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Owner" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span className="max-w-[200px] truncate font-medium">
+            {row.original.user.company_name} - {row.original.owner}
           </span>
         </div>
       );

@@ -77,7 +77,14 @@ export default function CompanyHome() {
             description="Below is a graph showing the dependencies of each company."
           />
         </div>
-        <div className="h-[calc(100vh-14rem)] w-3/4 p-2">
+        <div className="relative h-[calc(100vh-14rem)] w-3/4 p-2">
+          {data?.length === 0 ? (
+            <div className="absolute z-10 bg-black bg-opacity-60 w-full h-full flex items-center justify-center">
+              <div>No companies added yet.</div>
+            </div>
+          ) : (
+            <></>
+          )}
           <ReactFlow
             className="bg-zinc-700 border-white border-2 rounded-xl shadow-zinc-500 shadow-md"
             nodes={nodes}

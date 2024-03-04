@@ -141,9 +141,11 @@ export default function ProductHome() {
                 <CardHeader className="space-y-1">
                   <CardTitle className="text-2xl flex justify-between items-center">
                     <div>{product.productName}</div>
-                    <Link to={product.productId.toString()}>
-                      <StyledButton>More info</StyledButton>
-                    </Link>
+                    <div>
+                      <Link to={product.productId.toString()}>
+                        <StyledButton>More info</StyledButton>
+                      </Link>
+                    </div>
                   </CardTitle>
                   <Separator className="bg-white" />
                 </CardHeader>
@@ -225,6 +227,12 @@ export default function ProductHome() {
                     <div className="font-semibold">Product ID</div>
                     <div className="text-zinc-400 text-ellipsis text-sm overflow-hidden">
                       {product.productId}
+                    </div>
+                  </div>
+                  <div className="flex flex-col">
+                    <div className="font-semibold">Product Owner</div>
+                    <div className="text-zinc-400 text-ellipsis text-sm overflow-hidden">
+                      {product.owner}
                     </div>
                   </div>
                   <div className="flex flex-col">

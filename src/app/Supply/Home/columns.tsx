@@ -34,6 +34,21 @@ export const columns: ColumnDef<ISupplyMongo>[] = [
     },
   },
   {
+    accessorKey: "owner",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Owner" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span className="max-w-[200px] truncate font-medium">
+            {row.original.user.company_name} - {row.original.owner}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: "quantity",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Supply Quantity" />

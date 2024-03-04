@@ -64,6 +64,12 @@ export default function CustomNode(props: NodeProps) {
                 </div>
               </div>
               <div className="flex flex-col">
+                <div className="font-semibold">Product Owner</div>
+                <div className="text-zinc-400 max-w-[200px] truncate text-ellipsis text-sm overflow-hidden">
+                  {data.meta.user.company_name} - {data.meta.owner}
+                </div>
+              </div>
+              <div className="flex flex-col">
                 <div className="font-semibold">Product Supplied</div>
                 <div className="text-zinc-400 text-ellipsis text-sm overflow-hidden">
                   {data.meta.quantity}
