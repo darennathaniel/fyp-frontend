@@ -14,6 +14,7 @@ import StyledButton from "@/components/ui/StyledButton";
 import { useCompany } from "@/hooks/useCompany";
 import { useError } from "@/hooks/useError";
 import { useLoading } from "@/hooks/useLoading";
+import { useSuccess } from "@/hooks/useSuccess";
 import { IAddCompanyFormData } from "@/types/company/IAddCompanyFormData";
 import { IDialog } from "@/types/dialog/IDialog";
 import { AxiosError } from "axios";
@@ -21,6 +22,7 @@ import { FormEvent, useState } from "react";
 
 export default function AddCompanyDialog({ children }: IDialog) {
   const { showError } = useError();
+  const { showSuccess } = useSuccess();
   const { showLoading, closeLoading } = useLoading();
   const { addCompany } = useCompany();
   const [open, setOpen] = useState<boolean>(false);
@@ -30,12 +32,13 @@ export default function AddCompanyDialog({ children }: IDialog) {
     try {
       const { company_name, username, email, wallet_address } =
         e.target as typeof e.target & IAddCompanyFormData;
-      await addCompany(
+      const response = await addCompany(
         company_name.value,
         username.value,
         email.value,
         wallet_address.value
       );
+      showSuccess(response);
       setOpen(false);
       location.reload();
     } catch (err) {

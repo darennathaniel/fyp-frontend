@@ -142,6 +142,73 @@ export function useProduct() {
     });
     return response;
   };
+  const getIncomingDeleteRequest = async () => {
+    const response = await axiosPrivate.get("product/delete_request/incoming");
+    return response.data.data[0];
+  };
+  const getOutgoingDeleteRequest = async () => {
+    const response = await axiosPrivate.get("product/delete_request/outgoing");
+    return response.data.data[0];
+  };
+  const getHistoryDeleteRequest = async () => {
+    const incomingResponse = await axiosPrivate.get(
+      "product/delete_request/incoming",
+      {
+        params: {
+          timeline: "past",
+        },
+      }
+    );
+    const outgoingResponse = await axiosPrivate.get(
+      "product/delete_request/outgoing",
+      {
+        params: {
+          timeline: "past",
+        },
+      }
+    );
+    return [...incomingResponse.data.data[0], ...outgoingResponse.data.data[0]];
+  };
+  const deleteProduct = async (
+    requestId: number,
+    productId: number,
+    code: string
+  ) => {
+    const response = await axiosPrivate.delete("product", {
+      params: {
+        request_id: requestId,
+        product_id: productId,
+        code,
+      },
+    });
+    return response;
+  };
+  const approveDeleteProduct = async (
+    requestId: number,
+    productId: number,
+    code: string,
+    owner: string
+  ) => {
+    const response = await axiosPrivate.post("product/delete_request/approve", {
+      request_id: requestId,
+      product_id: productId,
+      code,
+      request_owner: owner,
+    });
+    return response;
+  };
+  const declineDeleteProduct = async (
+    requestId: number,
+    productId: number,
+    code: string
+  ) => {
+    const response = await axiosPrivate.post("product/delete_request/decline", {
+      request_id: requestId,
+      product_id: productId,
+      code,
+    });
+    return response;
+  };
   return {
     getProductByCompany,
     getPrerequisiteByCompany,
@@ -157,5 +224,11 @@ export function useProduct() {
     getAllProductsHaveRecipe,
     getAllProductsNoRecipe,
     deleteRequestProduct,
+    getIncomingDeleteRequest,
+    getOutgoingDeleteRequest,
+    getHistoryDeleteRequest,
+    deleteProduct,
+    approveDeleteProduct,
+    declineDeleteProduct,
   };
 }

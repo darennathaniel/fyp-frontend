@@ -44,7 +44,7 @@ export function useCompany() {
         username,
         email,
       });
-      return response.data as ICompany;
+      return response;
     } catch (err) {
       throw err;
     }

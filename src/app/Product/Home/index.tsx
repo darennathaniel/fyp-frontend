@@ -16,7 +16,7 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 import { useError } from "@/hooks/useError";
 import { useLoading } from "@/hooks/useLoading";
 import { useProduct } from "@/hooks/useProduct";
-import { setLoading } from "@/reducers/app";
+import { useSuccess } from "@/hooks/useSuccess";
 import { IProduct } from "@/types/product/IProduct";
 import { ISupply } from "@/types/supply/ISupply";
 import { AxiosError } from "axios";
@@ -46,6 +46,7 @@ export default function ProductHome() {
   >([]);
   const [allProducts, setAllProducts] = useState<IProduct[]>([]);
   const { showLoading, closeLoading } = useLoading();
+  const { showSuccess } = useSuccess();
   const { showError } = useError();
   useEffect(() => {
     showLoading();
@@ -155,6 +156,7 @@ export default function ProductHome() {
                           onConfirmClick={() => {
                             showLoading();
                             deleteRequestProduct(product.productId)
+                              .then((response) => showSuccess(response))
                               .catch((err) => {
                                 if (err instanceof AxiosError) showError(err);
                               })
