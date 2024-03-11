@@ -17,3 +17,8 @@ export interface ICompany {
   incomingDeleteRequests: Array<IDeleteRequest>;
   outgoingDeleteRequests: Array<IDeleteRequest>;
 }
+
+export interface ICompanyPartial {
+  wallet_address: string;
+  company_name: string;
+}

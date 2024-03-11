@@ -1,4 +1,5 @@
 import * as React from "react";
+import { ICompany, ICompanyPartial } from "../company/ICompany";
 import { IProduct } from "../product/IProduct";
 import { ISupply } from "../supply/ISupply";
 
@@ -7,8 +8,12 @@ export interface IDialog {
 }
 
 export interface ISendContractDialog extends IDialog {
-  to: { wallet_address: string; company_name: string };
+  to: ICompanyPartial;
   products: (IProduct & ISupply)[];
+}
+
+export interface ISendContractHomeDialog extends IDialog {
+  companies: ICompany[];
 }
 
 export interface ISendSupplyRequestDialog extends IDialog {

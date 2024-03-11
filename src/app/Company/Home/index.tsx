@@ -11,6 +11,7 @@ import { ICompany } from "@/types/company/ICompany";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import CustomNode from "./node";
 import PageHeader from "@/components/PageHeader";
+import SendContractHomeDialog from "../components/SendContractHomeDialog";
 
 const nodeTypes = {
   customNode: CustomNode,
@@ -64,7 +65,15 @@ export default function CompanyHome() {
             </Button>
           </AddCompanyDialog>
         ) : (
-          <Button className="w-28 cursor-default hidden md:block"></Button>
+          <SendContractHomeDialog companies={data ?? []}>
+            <Button
+              type="button"
+              variant="outline"
+              className="hover:bg-gray-100 active:bg-gray-300 hover:text-zinc-950 w-28"
+            >
+              Send Contract
+            </Button>
+          </SendContractHomeDialog>
         )}
       </div>
       <TabsContent
