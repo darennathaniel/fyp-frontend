@@ -200,12 +200,14 @@ export function useProduct() {
   const declineDeleteProduct = async (
     requestId: number,
     productId: number,
-    code: string
+    code: string,
+    owner: string
   ) => {
     const response = await axiosPrivate.post("product/delete_request/decline", {
       request_id: requestId,
       product_id: productId,
       code,
+      request_owner: owner,
     });
     return response;
   };

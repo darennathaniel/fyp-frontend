@@ -124,7 +124,8 @@ export const incomingColumns: ColumnDef<IIncomingDeleteRequestTable>[] = [
               declineDeleteProduct(
                 row.original.id,
                 row.original.product.productId,
-                row.original.code
+                row.original.code,
+                row.original.owner.wallet_address
               )
                 .then((response) => {
                   showSuccess(response);

@@ -156,17 +156,26 @@ export default function ProductHome() {
                           onConfirmClick={() => {
                             showLoading();
                             deleteRequestProduct(product.productId)
-                              .then((response) => showSuccess(response))
+                              .then((response) => {
+                                showSuccess(response);
+                                const newProducts = products.map(
+                                  (oldProduct) => {
+                                    if (
+                                      oldProduct.productId === product.productId
+                                    )
+                                      return {
+                                        ...oldProduct,
+                                        delete_request: true,
+                                      };
+                                    return oldProduct;
+                                  }
+                                );
+                                setProducts(newProducts);
+                              })
                               .catch((err) => {
                                 if (err instanceof AxiosError) showError(err);
                               })
                               .finally(() => closeLoading());
-                            const newProducts = products.map((oldProduct) => {
-                              if (oldProduct.productId === product.productId)
-                                return { ...oldProduct, delete_request: true };
-                              return oldProduct;
-                            });
-                            setProducts(newProducts);
                           }}
                           onCancelClick={() => {}}
                         >
@@ -273,7 +282,7 @@ export default function ProductHome() {
                   <div className="flex flex-col">
                     <div className="font-semibold">Product Owner</div>
                     <div className="text-zinc-400 text-ellipsis text-sm overflow-hidden">
-                      {product.owner}
+                      {product.owner ?? "N.A."}
                     </div>
                   </div>
                   <div className="flex flex-col">
@@ -284,15 +293,22 @@ export default function ProductHome() {
                   </div>
                 </CardContent>
                 <CardFooter className="grid gap-2 grid-cols-2">
-                  <SendSupplyRequestDialog
-                    product={product}
-                    owner={product.owner.split(" - ")[1]}
-                    company_name={product.owner.split(" - ")[0]}
-                  >
-                    <StyledButton className="col-span-2">
-                      Send Supply Request
-                    </StyledButton>
-                  </SendSupplyRequestDialog>
+                  {product.owner ? (
+                    <SendSupplyRequestDialog
+                      product={product}
+                      owner={product.owner.split(" - ")[1]}
+                      company_name={product.owner.split(" - ")[0]}
+                    >
+                      <StyledButton className="col-span-2">
+                        Send Supply Request
+                      </StyledButton>
+                    </SendSupplyRequestDialog>
+                  ) : (
+                    <div className="text-zinc-400 text-sm col-span-2">
+                      Send Supply Feature is disabled. Supply Owner has deleted
+                      ownership of product.
+                    </div>
+                  )}
                 </CardFooter>
               </Card>
             ))}
