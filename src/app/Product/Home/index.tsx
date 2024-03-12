@@ -218,6 +218,8 @@ export default function ProductHome() {
                           product={product}
                           data={products}
                           setData={setProducts}
+                          prerequisiteData={prerequisiteProducts}
+                          setPrerequisiteData={setPrerequisiteProducts}
                         >
                           <StyledButton>Convert Prerequisite</StyledButton>
                         </ConvertPrerequisiteToSupplyDialog>

@@ -16,7 +16,9 @@ import { useLoading } from "@/hooks/useLoading";
 import { useSuccess } from "@/hooks/useSuccess";
 import { useSupply } from "@/hooks/useSupply";
 import { IConvertToSupplyDialog } from "@/types/dialog/IDialog";
+import { IProduct } from "@/types/product/IProduct";
 import { IConvertToSupplyForm } from "@/types/supply/IConvertToSupplyForm";
+import { ISupply } from "@/types/supply/ISupply";
 import { ISupplyMongo } from "@/types/supply/ISupplyMongo";
 import { AxiosError } from "axios";
 import { FormEvent, useState } from "react";
@@ -26,6 +28,8 @@ export default function ConvertPrerequisiteToSupplyDialog({
   product,
   data,
   setData,
+  prerequisiteData,
+  setPrerequisiteData,
 }: IConvertToSupplyDialog) {
   const [open, setOpen] = useState<boolean>(false);
   const { showLoading, closeLoading } = useLoading();
@@ -51,6 +55,25 @@ export default function ConvertPrerequisiteToSupplyDialog({
           }
         });
         setData(newData);
+      }
+      if (prerequisiteData && setPrerequisiteData) {
+        const newPrerequisiteData = prerequisiteData.reduce(
+          (
+            acc: (IProduct & ISupply & { owner: string })[],
+            curr: IProduct & ISupply & { owner: string }
+          ) => {
+            const stored = responseData.updated_prerequisite_quantities.find(
+              ({ productId }) => productId === curr.productId
+            );
+            if (stored) {
+              curr.total = stored.total;
+            }
+            acc.push(curr);
+            return acc;
+          },
+          []
+        );
+        setPrerequisiteData(newPrerequisiteData);
       }
       showSuccess(response);
       setOpen(false);

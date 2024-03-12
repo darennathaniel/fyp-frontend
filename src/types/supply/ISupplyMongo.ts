@@ -1,5 +1,6 @@
 import { IProduct } from "../product/IProduct";
 import { IUser } from "../user/IUser";
+import { ISupply } from "./ISupply";
 
 export interface ISupplyMongo {
   supplyId: number;
@@ -11,4 +12,5 @@ export interface ISupplyMongo {
   timestamp: Date;
   owner: string;
   user: IUser;
+  updated_prerequisite_quantities: (ISupply & { productId: number })[];
 }

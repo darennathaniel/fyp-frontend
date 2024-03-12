@@ -24,6 +24,10 @@ export interface ISendSupplyRequestDialog extends IDialog {
 
 export interface IConvertToSupplyDialog extends IProductDialog {
   product: IProduct & ISupply;
+  prerequisiteData?: (IProduct & ISupply & { owner: string })[];
+  setPrerequisiteData?: React.Dispatch<
+    React.SetStateAction<(IProduct & ISupply & { owner: string })[]>
+  >;
 }
 
 export interface IProductDialog extends IDialog {
