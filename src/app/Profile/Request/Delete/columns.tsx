@@ -334,7 +334,7 @@ export const historyColumns: ColumnDef<IHistoryDeleteRequestTable>[] = [
             row.original.owner.wallet_address ? (
               <Badge className="bg-blue-600">OUTGOING</Badge>
             ) : (
-              <Badge className="bg-yellow-400">INCOMING</Badge>
+              <Badge className="bg-yellow-400 text-zinc-700">INCOMING</Badge>
             )}
           </span>
         </div>
