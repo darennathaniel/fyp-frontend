@@ -103,7 +103,7 @@ export default function SendSupplyRequestDialog({
               />
             </div>
             <div className="text-xs text-red-400">
-              NOTE: Approval from network owner is needed!
+              NOTE: Approval from product owner is needed!
             </div>
           </div>
           <Separator className="bg-white my-4" />

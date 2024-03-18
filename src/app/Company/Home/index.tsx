@@ -64,7 +64,7 @@ export default function CompanyHome() {
               Add Company
             </Button>
           </AddCompanyDialog>
-        ) : (
+        ) : user.isAuthenticated ? (
           <SendContractHomeDialog companies={data ?? []}>
             <Button
               type="button"
@@ -74,6 +74,8 @@ export default function CompanyHome() {
               Send Contract
             </Button>
           </SendContractHomeDialog>
+        ) : (
+          <Button className="w-28 cursor-default hidden md:block"></Button>
         )}
       </div>
       <TabsContent
