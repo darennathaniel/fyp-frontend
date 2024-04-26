@@ -15,6 +15,8 @@ import { useError } from "@/hooks/useError";
 import { useSuccess } from "@/hooks/useSuccess";
 import { useLoading } from "@/hooks/useLoading";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 export const incomingColumns: ColumnDef<IContractTable>[] = [
   {
@@ -33,10 +35,15 @@ export const incomingColumns: ColumnDef<IContractTable>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2 w-44">
-          <span className="max-w-[500px] truncate font-medium">
-            {(row.getValue("from") as IUser).company_name} -{" "}
-            {(row.getValue("from") as IUser).wallet_address}
-          </span>
+          <Link
+            to={`/company/${row.original.from.wallet_address}`}
+            className="max-w-[500px] truncate"
+          >
+            <Button className="font-medium justify-start p-0 h-8 hover:text-gray-400">
+              {(row.getValue("from") as IUser).company_name} -{" "}
+              {(row.getValue("from") as IUser).wallet_address}
+            </Button>
+          </Link>
         </div>
       );
     },

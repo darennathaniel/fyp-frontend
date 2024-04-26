@@ -12,9 +12,14 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 import CustomNode from "./node";
 import PageHeader from "@/components/PageHeader";
 import SendContractHomeDialog from "../components/SendContractHomeDialog";
+import CustomEdge from "./edge";
 
 const nodeTypes = {
   customNode: CustomNode,
+};
+
+const edgeTypes = {
+  customEdge: CustomEdge,
 };
 
 export default function CompanyHome() {
@@ -23,7 +28,7 @@ export default function CompanyHome() {
   const [data, setData] = useState<ICompany[]>();
   const onConnect = useCallback(
     (params: any) => setEdges((eds: any) => addEdge(params, eds)),
-    []
+    [setEdges]
   );
   const user = useAppSelector((state) => state.app.user);
   const { getAllCompany } = useCompany();
@@ -104,6 +109,7 @@ export default function CompanyHome() {
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
             nodeTypes={nodeTypes}
+            edgeTypes={edgeTypes}
             connectOnClick={false}
             fitView
           ></ReactFlow>
