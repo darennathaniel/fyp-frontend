@@ -31,7 +31,7 @@ const CustomEdge: FC<EdgeProps> = ({
         <div
           style={{
             position: "absolute",
-            transform: `translate(-50%, 0%) translate(${sourceX}px,${sourceY}px)`,
+            transform: `translate(-50%, -30%) translate(${sourceX}px,${sourceY}px)`,
             padding: 10,
             borderRadius: 5,
             fontSize: 12,

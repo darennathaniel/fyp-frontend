@@ -19,7 +19,12 @@ import { AxiosError } from "axios";
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router";
 import SendContractDialog from "../components/SendContractDialog";
+import CustomEdge from "../Home/edge";
 import { prerequisiteColumns, productColumns } from "./columns";
+
+const edgeTypes = {
+  customEdge: CustomEdge,
+};
 
 export default function CompanyDetails() {
   const { owner } = useParams();
@@ -118,6 +123,7 @@ export default function CompanyDetails() {
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
+          edgeTypes={edgeTypes}
           onConnect={onConnect}
           fitView
           connectOnClick={false}
