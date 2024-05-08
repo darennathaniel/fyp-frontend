@@ -9,7 +9,7 @@ export default function LandingPage() {
       <div>
         <div className="flex items-center">
           <h1 className="text-xl font-semibold text-gray-300">
-            powered by Blockchain
+            powered by Blockchain Ethereum
           </h1>
           <img src={ethereum} className="ml-2 w-6" />
         </div>

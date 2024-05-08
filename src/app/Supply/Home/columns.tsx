@@ -56,8 +56,24 @@ export const columns: ColumnDef<ISupplyMongo>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
+          <span className="max-w-[200px] truncate font-medium">
             {row.getValue("quantity")}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "timestamp",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Supply Timestamp" />
+    ),
+    cell: ({ row }) => {
+      const date = new Date(row.original.timestamp);
+      return (
+        <div className="flex space-x-2">
+          <span className="max-w-[200px] truncate font-medium">
+            {date.toUTCString()}
           </span>
         </div>
       );

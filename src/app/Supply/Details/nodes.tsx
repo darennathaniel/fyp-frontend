@@ -27,6 +27,7 @@ export default function CustomNode(props: NodeProps) {
   const isConnectable = props.isConnectable;
   const data: CustomNodeData = props.data;
   const [open, setOpen] = useState<boolean>(false);
+  const timestamp = new Date(data.meta.timestamp);
   return (
     <div>
       <Handle
@@ -73,6 +74,12 @@ export default function CustomNode(props: NodeProps) {
                 <div className="font-semibold">Product Supplied</div>
                 <div className="text-zinc-400 text-ellipsis text-sm overflow-hidden">
                   {data.meta.quantity}
+                </div>
+              </div>
+              <div className="flex flex-col">
+                <div className="font-semibold">Product Supplied</div>
+                <div className="text-zinc-400 text-ellipsis text-sm overflow-hidden">
+                  {timestamp.toUTCString()}
                 </div>
               </div>
             </CardContent>
